@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@theme {
+  /* Forensic Precision palette - Warm Dark Charcoal */
+  --color-background: #131313;
+  --color-surface: #131313;
+  --color-surface-dim: #131313;
+  --color-surface-bright: #3a3939;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353434;
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #c4c7c9;
+  --color-on-background: #e5e2e1;
+  --color-inverse-surface: #e5e2e1;
+  --color-inverse-on-surface: #313030;
+  --color-outline: #8e9193;
+  --color-outline-variant: #444749;
+  --color-surface-tint: #c5c6c8;
+  --color-primary: #ffffff;
+  --color-on-primary: #2e3132;
+  --color-primary-container: #e1e2e4;
+  --color-on-primary-container: #626566;
+  --color-inverse-primary: #5c5f60;
+  --color-secondary: #c4c6d1;
+  --color-on-secondary: #2d3039;
+  --color-secondary-container: #444650;
+  --color-on-secondary-container: #b3b5c0;
+  --color-tertiary: #ffffff;
+  --color-on-tertiary: #2b303d;
+  --color-tertiary-container: #dee2f2;
+  --color-on-tertiary-container: #5f6472;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-surface-variant: #353434;
+
+  /* Role-based fonts */
+  --font-display-lg: "Geist", "Inter", sans-serif;
+  --font-headline-md: "Geist", "Inter", sans-serif;
+  --font-body-sm: "Inter", sans-serif;
+  --font-body-xs: "Inter", sans-serif;
+  --font-data-mono: "JetBrains Mono", monospace;
+  --font-data-label: "JetBrains Mono", monospace;
+
+  /* Role-based type scale */
+  --text-display-lg: 32px;
+  --text-display-lg--line-height: 1.2;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 600;
+  --text-headline-md: 20px;
+  --text-headline-md--line-height: 1.4;
+  --text-headline-md--letter-spacing: -0.01em;
+  --text-headline-md--font-weight: 500;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+  --text-body-sm--letter-spacing: 0;
+  --text-body-sm--font-weight: 400;
+  --text-body-xs: 12px;
+  --text-body-xs--line-height: 1.5;
+  --text-body-xs--letter-spacing: 0;
+  --text-body-xs--font-weight: 400;
+  --text-data-mono: 13px;
+  --text-data-mono--line-height: 1;
+  --text-data-mono--letter-spacing: -0.01em;
+  --text-data-mono--font-weight: 500;
+  --text-data-label: 10px;
+  --text-data-label--line-height: 1;
+  --text-data-label--letter-spacing: 0.05em;
+  --text-data-label--font-weight: 700;
+
+  /* Shapes - soft 4px default, sharp inner elements */
+  --radius-sm: 0.125rem;
+  --radius-DEFAULT: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Layout grid */
+  --spacing-unit: 4px;
+  --spacing-gutter: 16px;
+  --spacing-margin: 24px;
+  --spacing-table-row-height: 32px;
+  --spacing-sidebar-width: 240px;
+  --spacing-inspector-width: 400px;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #131313;
+    color: #e5e2e1;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Custom scrollbar for data-dense views */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #131313;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #353434;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5c5f60;
+  }
+}
