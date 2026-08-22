@@ -7,22 +7,37 @@ const serverless = require("serverless-http");
 let cachedApp = null;
 
 const getApp = () => {
-  if (cachedApp) return cachedApp;
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  if (cachedApp) {
+    console.log("[SERVERLESS] Using cached Express app");
+    return cachedApp;
+  }
+  console.log("[SERVERLESS] Initializing Express app for the first time...");
   const { createApp } = require("../backend/dist/server");
   cachedApp = createApp();
+  console.log("[SERVERLESS] Express app initialized successfully");
   return cachedApp;
 };
 
 module.exports = async (req, res) => {
+  console.log("[SERVERLESS] Handler invoked:", req.method, req.url);
+
   // Vercel warm-up ping
   if (req.headers["x-vercel-warmer"]) {
+    console.log("[SERVERLESS] Warm-up ping received");
     res.statusCode = 200;
     res.setHeader("Content-Type", "text/plain");
     res.end("Warmed up");
     return;
   }
 
-  const app = getApp();
-  return serverless(app)(req, res);
+  try {
+    const app = getApp();
+    const handler = serverless(app);
+    return handler(req, res);
+  } catch (error) {
+    console.error("[SERVERLESS] Handler error:", error);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Serverless function internal error", details: error.message }));
+  }
 };
