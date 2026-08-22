@@ -8,8 +8,13 @@ let cachedServer = null;
 
 const getApp = () => {
   if (!cachedApp) {
-    const { createApp } = require("../backend/dist/server");
-    cachedApp = createApp();
+    try {
+      const { createApp } = require("../backend/dist/server");
+      cachedApp = createApp();
+    } catch (e) {
+      console.error("[SERVERLESS] Failed to create app:", e);
+      throw e;
+    }
   }
   return cachedApp;
 };
@@ -22,6 +27,9 @@ const getServer = () => {
 };
 
 module.exports = (req, res) => {
+  console.log("[SERVERLESS] Incoming request:", req.method, req.url);
+
+  // Vercel warm-up ping
   if (req.headers["x-vercel-warmer"]) {
     res.statusCode = 200;
     res.setHeader("Content-Type", "text/plain");
@@ -29,6 +37,13 @@ module.exports = (req, res) => {
     return;
   }
 
-  const server = getServer();
-  server.emit("request", req, res);
+  try {
+    const server = getServer();
+    server.emit("request", req, res);
+  } catch (error) {
+    console.error("[SERVERLESS] Handler error:", error);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Internal server error", details: error.message }));
+  }
 };
