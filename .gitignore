@@ -6,3 +6,4 @@ frontend/dist
 backend/dist
 backend/prisma/dev.db
 node_modules
+.vercel

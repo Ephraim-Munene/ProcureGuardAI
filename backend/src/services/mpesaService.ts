@@ -5,7 +5,7 @@ const CONSUMER_KEY = process.env.MPESA_CONSUMER_KEY || "";
 const CONSUMER_SECRET = process.env.MPESA_CONSUMER_SECRET || "";
 const PASSKEY = process.env.MPESA_PASSKEY || "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
 const SHORTCODE = process.env.MPESA_SHORTCODE || "174379";
-const CALLBACK_URL = process.env.MPESA_CALLBACK_URL || "https://procureguard-backend.onrender.com/api/mpesa/callback";
+const CALLBACK_URL = process.env.MPESA_CALLBACK_URL || "https://procure-guard-ai.vercel.app/api/mpesa/callback";
 
 // Helper to format phone number to 254XXXXXXXXX
 export const formatPhoneNumber = (phone: string): string => {

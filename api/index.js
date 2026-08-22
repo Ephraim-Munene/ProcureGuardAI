@@ -3,6 +3,9 @@
 const serverless = require("serverless-http");
 const { createApp } = require("../backend/dist/server");
 
+// Vercel injects environment variables automatically for Serverless Functions.
+// No dotenv needed here — Vercel provides them via process.env at runtime.
+
 const app = createApp();
 
 module.exports = async (req, res) => {
