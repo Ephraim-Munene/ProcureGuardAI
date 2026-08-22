@@ -78,12 +78,6 @@ const Pricing = () => {
 
   return (
     <div className="bg-surface-container-lowest text-on-surface min-h-[calc(100vh-80px)] pb-12">
-      {/* Fonts for Material Symbols */}
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,100,0,0&display=swap"
-      />
-
       <header className="mb-12 max-w-4xl px-gutter">
         <h1 className="font-display-lg text-display-lg text-on-surface mb-2">License Configuration</h1>
         <p className="text-on-surface-variant font-body-sm text-body-sm">

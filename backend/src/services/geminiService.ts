@@ -266,7 +266,7 @@ function generateDynamicAuditAnalysis(fileBuffer: Buffer, originalname: string) 
   const totalAmountKes = items.reduce((acc, item) => acc + item.invoicedUnitPriceKes * item.quantity, 0);
   const overallRiskScore = randomSeed === 0 ? 88.5 : randomSeed === 1 ? 65.0 : 34.2;
   const riskLevel = overallRiskScore > 75 ? "CRITICAL" : overallRiskScore > 50 ? "HIGH" : "MEDIUM";
-  const summaryNotes = `Forensic audit inspected ${items.length} distinct line items extracted from the invoice using Gemini 3.5 Flash NLP. Detected price markup anomalies and cross-examined against PPRA benchmark rates.`;
+  const summaryNotes = `[SIMULATED ANALYSIS - Gemini API unavailable] Forensic audit inspected ${items.length} distinct line items extracted from the invoice using Gemini 3.5 Flash NLP. Detected price markup anomalies and cross-examined against PPRA benchmark rates.`;
 
   return {
     invoiceNumber,

@@ -1,11 +1,15 @@
 import express, { Express } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import invoiceRoutes from "./routes/invoiceRoutes";
 import authRoutes from "./routes/authRoutes";
 import mpesaRoutes from "./routes/mpesaRoutes";
 import { authenticateUser, enforceDailyScanQuota } from "./middlewares/authMiddleware";
 
+// Load .env regardless of the working directory the server is started from
+// (works for both src/ via ts-node and dist/ compiled output)
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 dotenv.config();
 
 export const createApp = (): Express => {
