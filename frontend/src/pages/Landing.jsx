@@ -39,7 +39,7 @@ export default function Landing() {
   const [contactStatus, setContactStatus] = useState({ sending: false, success: '', error: '' });
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const scrollToSection = (id) => {

@@ -22,7 +22,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('procureguard_token');
     if (token) {
-      navigate('/dashboard', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [navigate]);
 
@@ -53,7 +53,7 @@ const Login = () => {
     try {
       const data = await loginUser(loginForm);
       login(data.token, data.user);
-      navigate('/dashboard', { replace: true });
+      navigate('/', { replace: true });
     } catch (err) {
       setError(err.response?.data?.error || 'Authentication failed');
     } finally {
@@ -74,7 +74,7 @@ const Login = () => {
         const tier = getTierById(selectedTier);
         setPendingPayment({ plan: tier.id, amount: tier.amount });
       } else {
-        navigate('/dashboard', { replace: true });
+        navigate('/', { replace: true });
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');
@@ -85,7 +85,7 @@ const Login = () => {
 
   const finishSignup = () => {
     setPendingPayment(null);
-    navigate('/dashboard', { replace: true });
+    navigate('/', { replace: true });
   };
 
   return (

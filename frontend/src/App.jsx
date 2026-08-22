@@ -72,6 +72,7 @@ export default function App() {
                     <main className="flex-1 flex flex-col min-w-0">
                       <Routes>
                         <Route path="/" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Navigate to="/" replace />} />
                         <Route path="/upload" element={<UploadInvoice />} />
                         <Route path="/audit/:id" element={<AuditDetails />} />
                         <Route path="/audits" element={<AuditTerminal />} />
