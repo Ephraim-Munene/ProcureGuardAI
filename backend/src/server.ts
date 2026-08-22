@@ -19,16 +19,16 @@ export const createApp = (): Express => {
   app.use("/api/auth", authRoutes);
   app.use("/api/mpesa", mpesaRoutes);
 
+  // Healthcheck (public)
+  app.get("/health", (_req, res) => {
+    res.json({ status: "ok", service: "ProcureGuard AI API", timestamp: new Date() });
+  });
+
   // Protected invoice routes (Authentication + Daily quota enforcement)
   const protectedInvoiceRoutes = express.Router();
   protectedInvoiceRoutes.use(authenticateUser, enforceDailyScanQuota);
   protectedInvoiceRoutes.use("/", invoiceRoutes);
   app.use("/api", protectedInvoiceRoutes);
-
-  // Healthcheck
-  app.get("/health", (_req, res) => {
-    res.json({ status: "ok", service: "ProcureGuard AI API", timestamp: new Date() });
-  });
 
   // 404 catch-all
   app.all("*", (_req, res) => {
