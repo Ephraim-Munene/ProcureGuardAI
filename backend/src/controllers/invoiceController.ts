@@ -4,11 +4,12 @@ import { auditInvoiceWithGemini } from "../services/geminiService";
 
 export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
   try {
-    if (!req.file) {
+    const file = (req as any).file;
+    if (!file) {
       return res.status(400).json({ error: "No invoice file uploaded." });
     }
 
-    const { buffer, mimetype, originalname } = req.file;
+    const { buffer, mimetype, originalname } = file;
 
     // 1. Analyze document using Gemini or dynamic forensic parser
     const auditResult = await auditInvoiceWithGemini(buffer, mimetype, originalname);
