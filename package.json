@@ -2,7 +2,7 @@
   "name": "procureguard-vercel",
   "private": true,
   "version": "1.0.0",
-  "engines": { "node": "18.x" },
+  "engines": { "node": "24.x" },
   "scripts": {
     "build:frontend": "cd frontend && npm install && npm run build",
     "build:backend": "cd backend && npm install && npm run build",
