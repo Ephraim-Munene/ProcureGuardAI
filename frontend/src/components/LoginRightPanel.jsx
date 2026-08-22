@@ -15,7 +15,7 @@ const LoginRightPanel = ({
   handleSignupSubmit,
 }) => {
   return (
-    <div className="w-full md:w-1/2 lg:w-5/12 h-full flex flex-col justify-center items-center p-6 sm:p-12 bg-surface-container-lowest relative z-20">
+    <div className="w-full md:w-1/2 lg:w-5/12 flex flex-col justify-center items-center p-4 sm:p-6 md:p-12 bg-surface-container-lowest relative z-20 py-10">
       <div className="w-full max-w-[380px] flex flex-col">
         {/* Mobile Header */}
         <div className="flex md:hidden items-center gap-3 mb-10 justify-center">

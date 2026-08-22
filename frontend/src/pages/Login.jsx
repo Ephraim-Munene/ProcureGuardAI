@@ -71,7 +71,7 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-surface-container-lowest text-on-surface h-screen w-screen overflow-hidden flex flex-col md:flex-row antialiased selection:bg-surface-variant selection:text-primary">
+    <div className="bg-surface-container-lowest text-on-surface min-h-screen md:h-screen w-full md:w-screen overflow-y-auto md:overflow-hidden flex flex-col md:flex-row antialiased selection:bg-surface-variant selection:text-primary">
       <LoginLeftPanel />
       <LoginRightPanel
         activeTab={activeTab}

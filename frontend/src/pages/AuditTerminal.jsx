@@ -118,7 +118,7 @@ export default function AuditTerminal() {
         </div>
       ) : (
         <div className="flex-1 overflow-auto bg-surface-container-low border border-outline-variant">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[640px] text-left border-collapse">
             <thead className="sticky top-0 bg-surface-container-low z-10 font-data-label text-data-label text-on-surface-variant uppercase border-b border-outline-variant">
               <tr>
                 <th className="p-2 pl-4">Status</th>

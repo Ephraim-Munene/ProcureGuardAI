@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -23,6 +23,8 @@ function RequireAuth() {
 }
 
 export default function App() {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-background text-on-background font-body-sm antialiased">
@@ -33,9 +35,12 @@ export default function App() {
               path="/*"
               element={
                 <>
-                  <Navbar />
+                  <Navbar onMenuClick={() => setMobileNavOpen(true)} />
                   <div className="flex-1 flex flex-col md:pl-sidebar-width">
-                    <Sidebar />
+                    <Sidebar
+                      mobileOpen={mobileNavOpen}
+                      onCloseMobile={() => setMobileNavOpen(false)}
+                    />
                     <main className="flex-1 flex flex-col min-w-0">
                       <Routes>
                         <Route path="/" element={<Dashboard />} />

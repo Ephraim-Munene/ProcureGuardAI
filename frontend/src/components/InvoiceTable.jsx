@@ -32,18 +32,18 @@ export default function InvoiceTable({ invoices, loading, onNavigate }) {
 
   return (
     <div className="flex-[0.65] bg-surface-container-low border border-outline-variant flex flex-col overflow-hidden relative min-w-0">
-      <div className="p-3 border-b border-outline-variant flex justify-between items-center bg-surface-container-low z-10 sticky top-0">
+      <div className="p-3 border-b border-outline-variant flex flex-wrap gap-y-2 justify-between items-center bg-surface-container-low z-10 sticky top-0">
         <h2 className="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
           <SlidersHorizontal className="text-[18px]" />
           Live Audit Registry
         </h2>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Filter records..."
-            className="bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm px-2 py-1 w-44 focus:border-primary focus:ring-0 focus:outline-none placeholder:text-on-surface-variant"
+            className="bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm px-2 py-1 w-full sm:w-44 focus:border-primary focus:ring-0 focus:outline-none placeholder:text-on-surface-variant"
           />
           <select
             value={severity}
@@ -75,7 +75,7 @@ export default function InvoiceTable({ invoices, loading, onNavigate }) {
         </div>
       ) : (
         <div className="flex-1 overflow-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[640px] text-left border-collapse">
             <thead className="sticky top-0 bg-surface-container-low z-10 font-data-label text-data-label text-on-surface-variant uppercase border-b border-outline-variant">
               <tr>
                 <th className="p-2 pl-4 w-8">Status</th>

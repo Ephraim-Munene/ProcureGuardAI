@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Bell, Settings, ShieldCheck, User, LogOut, ChevronRight, RefreshCw, Zap } from 'lucide-react';
+import { Bell, Settings, ShieldCheck, User, LogOut, ChevronRight, Menu } from 'lucide-react';
 import { fetchInvoices, fetchSettings } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { to: '/upload', label: 'Neural Scan', end: false },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onMenuClick }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [notifications, setNotifications] = useState([]);
@@ -68,8 +68,15 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-surface border-b border-outline-variant flex justify-between items-center w-full px-gutter h-12 shrink-0">
-      <div className="flex items-center gap-6 h-full">
-        <NavLink to="/" className="font-headline-md text-headline-md font-bold tracking-tight text-on-surface flex items-center h-full">
+      <div className="flex items-center gap-3 md:gap-6 h-full min-w-0">
+        <button
+          onClick={onMenuClick}
+          className="md:hidden p-1.5 -ml-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors rounded-DEFAULT cursor-pointer"
+          aria-label="Open navigation menu"
+        >
+          <Menu className="text-[22px]" />
+        </button>
+        <NavLink to="/" className="font-headline-md text-headline-md font-bold tracking-tight text-on-surface flex items-center h-full truncate">
           ProcureGuard AI
         </NavLink>
         <nav className="hidden md:flex items-center h-full gap-1">
@@ -125,7 +132,7 @@ export default function Navbar() {
             )}
           </button>
           {notifOpen && (
-            <div className="absolute right-0 top-full mt-2 w-80 bg-surface-container border border-outline-variant shadow-xl z-50">
+            <div className="absolute right-0 top-full mt-2 w-[min(20rem,calc(100vw-1.5rem))] bg-surface-container border border-outline-variant shadow-xl z-50">
               <div className="px-4 py-2 border-b border-outline-variant flex justify-between items-center">
                 <span className="font-data-label text-data-label text-on-surface-variant uppercase">Flagged Alerts</span>
                 <span className="font-data-mono text-data-mono text-on-surface-variant">{notifications.length}</span>

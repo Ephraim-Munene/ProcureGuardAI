@@ -26,7 +26,7 @@ const SIDE_ITEMS = [
   { to: '/pricing', icon: CreditCard, label: 'License Config', end: false },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen = false, onCloseMobile = () => {} }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [healthOpen, setHealthOpen] = useState(false);
@@ -56,7 +56,70 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="hidden md:flex fixed left-0 top-12 bottom-0 w-sidebar-width bg-surface-container-low border-r border-outline-variant flex flex-col z-40">
+      {/* Mobile drawer */}
+      <div
+        className={`md:hidden fixed inset-0 top-12 z-40 transition-opacity duration-200 ${
+          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={onCloseMobile}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+      <aside
+        className={`md:hidden fixed left-0 top-12 bottom-0 w-64 bg-surface-container-low border-r border-outline-variant flex flex-col z-50 transition-transform duration-200 ease-in-out ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <nav className="flex-1 overflow-y-auto py-2">
+          <NavLink
+            to="/"
+            end
+            onClick={onCloseMobile}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-gutter py-2.5 transition-colors ${
+                isActive
+                  ? 'bg-surface-container-highest text-primary border-r-2 border-primary'
+                  : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+              }`
+            }
+          >
+            <ShieldAlert className="text-[20px]" />
+            <span className="font-body-sm text-body-sm">Dashboard</span>
+          </NavLink>
+          {SIDE_ITEMS.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={onCloseMobile}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-gutter py-2.5 transition-colors ${
+                    isActive
+                      ? 'bg-surface-container-highest text-primary border-r-2 border-primary'
+                      : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+                  }`
+                }
+              >
+                <Icon className="text-[20px]" />
+                <span className="font-body-sm text-body-sm">{item.label}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+        <div className="p-4 border-t border-outline-variant">
+          <button
+            onClick={() => { onCloseMobile(); setSignOutOpen(true); }}
+            className="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-3 px-2 py-1.5 cursor-pointer"
+          >
+            <LogOut className="text-[16px]" />
+            <span className="font-body-xs text-body-xs">Sign Out</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex fixed left-0 top-12 bottom-0 w-sidebar-width bg-surface-container-low border-r border-outline-variant flex-col z-40">
         <div className="p-gutter border-b border-outline-variant flex items-center gap-3">
           <div className="w-8 h-8 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center flex-shrink-0">
             <ShieldAlert className="text-on-surface-variant text-[18px]" />

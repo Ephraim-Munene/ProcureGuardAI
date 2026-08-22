@@ -135,16 +135,16 @@ export default function AuditDetails() {
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Risk Banner & Action Header */}
       <div className="flex-none px-margin py-4 border-b border-outline-variant bg-surface flex flex-wrap justify-between items-center gap-4 z-10">
-        <div className="flex items-center gap-4 min-w-0">
+        <div className="flex items-center gap-4 min-w-0 w-full sm:w-auto">
           {critical ? (
-            <div className="bg-error/10 border border-error text-error px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+            <div className="bg-error/10 border border-error text-error px-3 py-1.5 rounded-DEFAULT flex items-center gap-2 flex-wrap">
               <AlertTriangle className="text-[18px]" />
               <span className="font-data-mono text-data-mono font-bold tracking-tight">
                 RISK SCORE: {riskScore.toFixed(0)}/100 · SEVERE PRICE INFLATION DETECTED
               </span>
             </div>
           ) : (
-            <div className="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+            <div className="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2 flex-wrap">
               <CheckCircle className="text-[18px]" />
               <span className="font-data-mono text-data-mono font-bold tracking-tight">
                 RISK SCORE: {riskScore.toFixed(0)}/100 · STANDARD VARIANCE
@@ -276,7 +276,7 @@ export default function AuditDetails() {
 
         {/* RIGHT: AI Breakdown (55%) */}
         <div className="flex-1 lg:w-[55%] flex flex-col bg-surface overflow-hidden">
-          <div className="p-6 flex-1 overflow-y-auto">
+          <div className="p-4 sm:p-6 flex-1 overflow-y-auto">
             <h2 className="font-headline-md text-headline-md text-primary mb-4 border-b border-outline-variant pb-2 flex items-center gap-2">
               <Gavel className="text-[20px]" />
               AI Discrepancy Breakdown

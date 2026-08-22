@@ -77,7 +77,7 @@ export default function UploadInvoice() {
       <main className="flex-1 flex flex-col items-center justify-center p-margin">
         {loading ? (
           <div className="w-full max-w-4xl bg-surface-container-low border border-outline-variant rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4 border-b border-outline-variant pb-4">
+            <div className="flex flex-wrap gap-y-2 items-center justify-between mb-4 border-b border-outline-variant pb-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center">
                   <ScanLine className="text-[18px]" />
@@ -91,7 +91,7 @@ export default function UploadInvoice() {
                   </div>
                 </div>
               </div>
-              <div className="font-data-mono text-data-mono text-on-surface-variant">{file?.name || 'Scanning...'}</div>
+              <div className="font-data-mono text-data-mono text-on-surface-variant max-w-full truncate">{file?.name || 'Scanning...'}</div>
             </div>
 
             <div className="space-y-3 font-data-mono text-data-mono text-sm">
