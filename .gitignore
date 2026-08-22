@@ -1,5 +1,7 @@
 graphify-out
 PLANNING.md
 stitch_procureguard_oversight_terminal
-stitch_procureguard_oversight_terminal (1)
-stitch_procureguard_oversight_terminal (2)
+
+frontend/dist
+backend/dist
+backend/prisma/dev.db

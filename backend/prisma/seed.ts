@@ -26,14 +26,38 @@ async function main() {
 
   // Create default auditor user
   await prisma.user.upsert({
-    where: { email: "auditor@eacc.go.ke" },
+    where: { email: "auditor@procureguard.go.ke" },
     update: {},
     create: {
-      email: "auditor@eacc.go.ke",
+      email: "auditor@procureguard.go.ke",
       name: "Lead Procurement Auditor",
       role: "AUDITOR",
     },
   });
+
+  // Default application settings
+  const defaults: Record<string, string> = {
+    riskCriticalThreshold: "75",
+    riskHighThreshold: "50",
+    riskFlagThreshold: "30",
+    baseline: "PPRA Baseline 2026",
+    departments: JSON.stringify([
+      "Finance",
+      "Health",
+      "Education",
+      "Infrastructure",
+      "Agriculture",
+      "Water & Sanitation",
+    ]),
+  };
+
+  for (const [key, value] of Object.entries(defaults)) {
+    await prisma.setting.upsert({
+      where: { key },
+      update: {},
+      create: { key, value },
+    });
+  }
 
   console.log("Seeding complete.");
 }

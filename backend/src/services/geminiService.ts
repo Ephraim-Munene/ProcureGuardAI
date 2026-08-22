@@ -37,7 +37,7 @@ export async function auditInvoiceWithGemini(fileBuffer: Buffer, mimeType: strin
               },
             },
             {
-              text: `You are a Senior Fraud Auditor for the Ethics and Anti-Corruption Commission (EACC) of Kenya. 
+              text: `You are a Senior Fraud Auditor for the Republic of Kenya's public procurement oversight authority. 
 Analyze this uploaded government invoice document carefully.
 Extract all vendor metadata and ALL individual line items. Do not truncate, summarize, or omit any line items. If the document lists 4 or more items, extract every single item.
 

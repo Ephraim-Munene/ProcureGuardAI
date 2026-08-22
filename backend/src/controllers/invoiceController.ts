@@ -18,7 +18,7 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     if (!user) {
       user = await prisma.user.create({
         data: {
-          email: "auditor@eacc.go.ke",
+          email: "auditor@procureguard.go.ke",
           name: "Lead Procurement Auditor",
           role: "AUDITOR"
         }
@@ -121,5 +121,90 @@ export const getBenchmarks = async (_req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching benchmarks:", error);
     return res.status(500).json({ error: "Failed to fetch market benchmarks." });
+  }
+};
+
+export const createBenchmark = async (req: Request, res: Response) => {
+  try {
+    const { itemName, category, averageMarketPriceKes, maxAllowedPriceKes } = req.body;
+    if (!itemName || !category || averageMarketPriceKes == null || maxAllowedPriceKes == null) {
+      return res.status(400).json({ error: "itemName, category, averageMarketPriceKes and maxAllowedPriceKes are required." });
+    }
+    const benchmark = await prisma.benchmarkPrice.create({
+      data: {
+        itemName,
+        category,
+        averageMarketPriceKes: Number(averageMarketPriceKes),
+        maxAllowedPriceKes: Number(maxAllowedPriceKes),
+      },
+    });
+    return res.status(201).json({ success: true, benchmark });
+  } catch (error) {
+    console.error("Error creating benchmark:", error);
+    return res.status(500).json({ error: "Failed to create market benchmark." });
+  }
+};
+
+export const updateBenchmark = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { itemName, category, averageMarketPriceKes, maxAllowedPriceKes } = req.body;
+    const updated = await prisma.benchmarkPrice.update({
+      where: { id },
+      data: {
+        ...(itemName !== undefined && { itemName }),
+        ...(category !== undefined && { category }),
+        ...(averageMarketPriceKes !== undefined && { averageMarketPriceKes: Number(averageMarketPriceKes) }),
+        ...(maxAllowedPriceKes !== undefined && { maxAllowedPriceKes: Number(maxAllowedPriceKes) }),
+      },
+    });
+    return res.json({ success: true, benchmark: updated });
+  } catch (error) {
+    console.error("Error updating benchmark:", error);
+    return res.status(500).json({ error: "Failed to update market benchmark." });
+  }
+};
+
+export const deleteBenchmark = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await prisma.benchmarkPrice.delete({ where: { id } });
+    return res.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting benchmark:", error);
+    return res.status(500).json({ error: "Failed to delete market benchmark." });
+  }
+};
+
+export const getSettings = async (_req: Request, res: Response) => {
+  try {
+    const settings = await prisma.setting.findMany();
+    const map: Record<string, string> = {};
+    settings.forEach((s) => { map[s.key] = s.value; });
+    return res.json(map);
+  } catch (error) {
+    console.error("Error fetching settings:", error);
+    return res.status(500).json({ error: "Failed to fetch settings." });
+  }
+};
+
+export const updateSettings = async (req: Request, res: Response) => {
+  try {
+    const entries = req.body && typeof req.body === "object" ? req.body : {};
+    for (const key of Object.keys(entries)) {
+      const value = typeof entries[key] === "string" ? entries[key] : JSON.stringify(entries[key]);
+      await prisma.setting.upsert({
+        where: { key },
+        update: { value },
+        create: { key, value },
+      });
+    }
+    const settings = await prisma.setting.findMany();
+    const map: Record<string, string> = {};
+    settings.forEach((s) => { map[s.key] = s.value; });
+    return res.json({ success: true, settings: map });
+  } catch (error) {
+    console.error("Error updating settings:", error);
+    return res.status(500).json({ error: "Failed to update settings." });
   }
 };

@@ -1,29 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Terminal,
-  Landmark,
-  Gavel,
-  FolderLock,
   ScanLine,
-  ShieldAlert,
-  Database,
-  LogOut,
   Keyboard,
   Upload,
   CheckCircle2,
   RefreshCw,
-  AlertTriangle,
+  FolderOpen,
 } from 'lucide-react';
 import { auditInvoice } from '../api/client';
-
-const SIDE_ITEMS = [
-  { icon: Terminal, label: 'Audit Terminal' },
-  { icon: Landmark, label: 'Entity Forensic' },
-  { icon: Gavel, label: 'Risk Matrix' },
-  { icon: FolderLock, label: 'Legal Archive' },
-  { icon: ScanLine, label: 'Neural Intake', active: true },
-];
 
 const SCAN_STEPS = [
   { done: true, text: 'OCR text extracted (99.8% confidence)' },
@@ -31,6 +16,8 @@ const SCAN_STEPS = [
   { done: false, active: true, text: 'Cross-referencing PPRA index prices...' },
   { done: false, text: 'Fraud vector analysis' },
 ];
+
+const ACCEPT = '.pdf,.png,.tiff,.jpg,.jpeg';
 
 export default function UploadInvoice() {
   const navigate = useNavigate();
@@ -53,6 +40,11 @@ export default function UploadInvoice() {
     }
   };
 
+  const openFilePicker = (e) => {
+    e.stopPropagation();
+    inputRef.current?.click();
+  };
+
   const handleSubmit = async () => {
     if (!file) return;
     try {
@@ -72,56 +64,14 @@ export default function UploadInvoice() {
   };
 
   return (
-    <div className="flex-1 flex md:pl-sidebar-width">
-      {/* SideNavBar (Hidden on Mobile) */}
-      <aside className="hidden md:flex fixed left-0 top-12 bottom-0 w-sidebar-width bg-surface-container-low border-r border-outline-variant flex flex-col z-40">
-        <div className="p-gutter border-b border-outline-variant flex items-center gap-3">
-          <div className="w-8 h-8 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center flex-shrink-0">
-            <ShieldAlert className="text-on-surface-variant text-[18px]" />
-          </div>
-          <div>
-            <div className="font-body-sm text-body-sm font-medium text-on-surface">Oversight Terminal</div>
-            <div className="font-data-label text-data-label text-on-surface-variant mt-1">V.2.4.0-Forensic</div>
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-y-auto py-2">
-          {SIDE_ITEMS.map((item) => {
-            const Icon = item.icon;
-            const active = item.active;
-            return (
-              <div
-                key={item.label}
-                className={`flex items-center gap-3 px-gutter py-2 group cursor-pointer transition-all duration-150 ease-in-out ${
-                  active
-                    ? 'bg-surface-container-highest text-primary border-r-2 border-primary'
-                    : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
-                }`}
-              >
-                <Icon className={`text-[20px] ${active ? 'text-primary' : 'group-hover:text-primary'}`} />
-                <span className="font-body-sm text-body-sm">{item.label}</span>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="p-4 border-t border-outline-variant">
-          <button className="w-full bg-surface-container-high text-on-surface border border-outline-variant hover:bg-surface-container-highest transition-colors rounded py-2 px-4 flex items-center justify-center gap-2 mb-4 cursor-pointer">
-            <AlertTriangle className="text-[16px]" />
-            <span className="font-body-sm text-body-sm font-medium">Escalate to EACC</span>
-          </button>
-          <div className="flex flex-col gap-1">
-            <div className="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-3 px-2 py-1.5 group cursor-pointer">
-              <Database className="text-[16px]" />
-              <span className="font-body-xs text-body-xs">System Health</span>
-            </div>
-            <div className="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-3 px-2 py-1.5 group cursor-pointer">
-              <LogOut className="text-[16px]" />
-              <span className="font-body-xs text-body-xs">Sign Out</span>
-            </div>
-          </div>
-        </div>
-      </aside>
+    <div className="flex-1 flex flex-col">
+      <input
+        ref={inputRef}
+        type="file"
+        accept={ACCEPT}
+        onChange={handleFileChange}
+        className="hidden"
+      />
 
       {/* Main Content Canvas */}
       <main className="flex-1 flex flex-col items-center justify-center p-margin">
@@ -209,14 +159,22 @@ export default function UploadInvoice() {
                 <div className="h-4 w-px bg-outline-variant mx-2"></div>
                 <div className="flex items-center gap-1 text-on-surface-variant">
                   <Keyboard className="text-[14px]" />
-                  <span className="font-data-mono text-data-mono">Select or drop file</span>
+                  <span className="font-data-mono text-data-mono">Drop file here</span>
                 </div>
               </div>
 
               <button
+                onClick={openFilePicker}
+                className="mt-6 flex items-center gap-2 text-primary underline underline-offset-4 hover:text-on-surface transition-colors font-body-sm text-body-sm cursor-pointer"
+              >
+                <FolderOpen className="text-[16px]" />
+                or select file from your device
+              </button>
+
+              <button
                 onClick={(e) => { e.stopPropagation(); handleSubmit(); }}
                 disabled={!file}
-                className={`mt-6 px-6 py-2 rounded font-data-mono text-data-mono transition-colors ${
+                className={`mt-4 px-6 py-2 rounded font-data-mono text-data-mono transition-colors ${
                   file
                     ? 'bg-surface-container-high text-on-surface border border-outline-variant hover:bg-surface-container-highest cursor-pointer'
                     : 'bg-surface-container-lowest text-on-surface-variant border border-outline-variant cursor-not-allowed'

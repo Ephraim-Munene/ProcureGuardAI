@@ -5,7 +5,12 @@ import {
   getInvoices,
   getInvoiceById,
   updateInvoiceStatus,
-  getBenchmarks
+  getBenchmarks,
+  createBenchmark,
+  updateBenchmark,
+  deleteBenchmark,
+  getSettings,
+  updateSettings
 } from "../controllers/invoiceController";
 
 const upload = multer({
@@ -20,5 +25,10 @@ router.get("/invoices", getInvoices);
 router.get("/invoices/:id", getInvoiceById);
 router.patch("/invoices/:id/status", updateInvoiceStatus);
 router.get("/benchmarks", getBenchmarks);
+router.post("/benchmarks", createBenchmark);
+router.put("/benchmarks/:id", updateBenchmark);
+router.delete("/benchmarks/:id", deleteBenchmark);
+router.get("/settings", getSettings);
+router.put("/settings", updateSettings);
 
 export default router;

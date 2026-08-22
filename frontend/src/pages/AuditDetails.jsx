@@ -76,7 +76,7 @@ export default function AuditDetails() {
         overallRiskScore,
         riskLevel,
         status: 'FLAGGED',
-        summaryNotes: `Forensic audit inspected ${items.length} distinct line items extracted from uploaded submission ${invoiceNumber}. Detected price markup anomalies across hardware and supply categories using Gemini 3.5 Flash.`,
+        summaryNotes: `Forensic audit inspected ${items.length} distinct line items extracted from uploaded submission ${invoiceNumber}. Detected price markup anomalies across hardware and supply categories.`,
         createdAt: new Date().toISOString(),
         items,
       });
@@ -180,7 +180,7 @@ export default function AuditDetails() {
             className="px-4 py-2 bg-error text-on-error font-data-mono text-data-mono hover:bg-error/90 transition-colors duration-200 flex items-center gap-2 rounded-DEFAULT font-bold cursor-pointer disabled:opacity-60"
           >
             <Gavel className="text-[18px]" />
-            Escalate to EACC Oversight
+            Flag for Investigation
           </button>
         </div>
       </div>

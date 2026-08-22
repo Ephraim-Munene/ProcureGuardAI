@@ -54,3 +54,9 @@ model BenchmarkPrice {
   maxAllowedPriceKes   Float
   updatedAt            DateTime @updatedAt
 }
+
+model Setting {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String
+}

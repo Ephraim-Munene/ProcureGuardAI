@@ -41,3 +41,28 @@ export const fetchBenchmarks = async () => {
   const response = await apiClient.get('/benchmarks');
   return response.data;
 };
+
+export const createBenchmark = async (payload) => {
+  const response = await apiClient.post('/benchmarks', payload);
+  return response.data;
+};
+
+export const updateBenchmark = async (id, payload) => {
+  const response = await apiClient.put(`/benchmarks/${id}`, payload);
+  return response.data;
+};
+
+export const deleteBenchmark = async (id) => {
+  const response = await apiClient.delete(`/benchmarks/${id}`);
+  return response.data;
+};
+
+export const fetchSettings = async () => {
+  const response = await apiClient.get('/settings');
+  return response.data;
+};
+
+export const updateSettings = async (payload) => {
+  const response = await apiClient.put('/settings', payload);
+  return response.data;
+};
