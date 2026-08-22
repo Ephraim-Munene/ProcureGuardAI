@@ -2,7 +2,9 @@
   "name": "procureguard-vercel",
   "private": true,
   "version": "1.0.0",
-  "engines": { "node": "24.x" },
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "build:frontend": "cd frontend && npm install && npm run build",
     "build:backend": "cd backend && npm install && npm run build",
@@ -10,7 +12,7 @@
     "start": "vercel"
   },
   "dependencies": {
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^4.0.0"
   },
   "overrides": {
     "parse-body": "^2.0.1"
