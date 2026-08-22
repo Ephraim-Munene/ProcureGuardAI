@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,51 +8,74 @@ generator client {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  name      String
-  role      String    @default("AUDITOR") // AUDITOR, ADMIN
-  invoices  Invoice[]
-  createdAt DateTime  @default(now())
+  id                 String             @id @default(uuid())
+  email              String             @unique
+  passwordHash       String             @default("")
+  name               String
+  role               String             @default("AUDITOR") // SUPERADMIN, ADMIN, AUDITOR
+  subscriptionPlan   String             @default("FREE") // FREE, PRO, ENTERPRISE
+  subscriptionStatus String             @default("ACTIVE") // ACTIVE, PENDING, EXPIRED
+  dailyScanCount     Int                @default(0)
+  lastScanDate       String             @default("") // YYYY-MM-DD format for easy daily resets
+  invoices           Invoice[]
+  mpesaTransactions  MpesaTransaction[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+model MpesaTransaction {
+  id                 String   @id @default(uuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  checkoutRequestId  String   @unique
+  merchantRequestId  String?
+  phoneNumber        String
+  amount             Float
+  plan               String   // PRO, ENTERPRISE
+  status             String   @default("PENDING") // PENDING, SUCCESS, FAILED, CANCELLED
+  mpesaReceiptNumber String?
+  resultDesc         String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Invoice {
-  id                 String        @id @default(uuid())
-  userId             String
-  user               User          @relation(fields: [userId], references: [id])
-  invoiceNumber      String
-  vendorName         String
-  fileUrl            String
-  totalAmountKes     Float
-  overallRiskScore   Float         // 0.0 to 100.0
-  riskLevel          String        // LOW, MEDIUM, HIGH, CRITICAL
-  status             String        @default("FLAGGED") // CLEAN, FLAGGED, RESOLVED
-  summaryNotes       String
-  items              InvoiceItem[]
-  createdAt          DateTime      @default(now())
+  id               String        @id @default(uuid())
+  userId           String
+  user             User          @relation(fields: [userId], references: [id])
+  invoiceNumber    String
+  vendorName       String
+  fileUrl          String
+  totalAmountKes   Float
+  overallRiskScore Float // 0.0 to 100.0
+  riskLevel        String // LOW, MEDIUM, HIGH, CRITICAL
+  status           String        @default("FLAGGED") // CLEAN, FLAGGED, RESOLVED
+  summaryNotes     String
+  items            InvoiceItem[]
+  createdAt        DateTime      @default(now())
 }
 
 model InvoiceItem {
-  id                   String    @id @default(uuid())
+  id                   String  @id @default(uuid())
   invoiceId            String
-  invoice              Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoice              Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   description          String
   quantity             Int
   invoicedUnitPriceKes Float
   marketUnitPriceKes   Float
   inflationPercentage  Float
-  isFlagged            Boolean   @default(false)
+  isFlagged            Boolean @default(false)
   flagReason           String?
-  riskLevel            String    // LOW, MEDIUM, HIGH, CRITICAL
+  riskLevel            String // LOW, MEDIUM, HIGH, CRITICAL
 }
 
 model BenchmarkPrice {
-  id                   String   @id @default(uuid())
-  itemName             String   @unique
-  category             String   // e.g., Stationery, Hardware, Electronics
+  id                    String   @id @default(uuid())
+  itemName              String   @unique
+  category              String // e.g., Stationery, Hardware, Electronics
   averageMarketPriceKes Float
-  maxAllowedPriceKes   Float
-  updatedAt            DateTime @updatedAt
+  maxAllowedPriceKes    Float
+  updatedAt             DateTime @updatedAt
 }
 
 model Setting {

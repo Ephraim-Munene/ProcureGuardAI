@@ -13,22 +13,29 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     // 1. Analyze document using Gemini or dynamic forensic parser
     const auditResult = await auditInvoiceWithGemini(buffer, mimetype, originalname);
 
-    // 2. Fetch or create default auditor user
-    let user = await prisma.user.findFirst();
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
-          email: "auditor@procureguard.go.ke",
-          name: "Lead Procurement Auditor",
-          role: "AUDITOR"
-        }
-      });
+    // 2. Fetch authenticated user or create default auditor user
+    const authenticatedUser = (req as any).user;
+    let userId = authenticatedUser?.id;
+
+    if (!userId) {
+      let defaultUser = await prisma.user.findFirst();
+      if (!defaultUser) {
+        defaultUser = await prisma.user.create({
+          data: {
+            email: "auditor@procureguard.go.ke",
+            name: "Lead Procurement Auditor",
+            role: "AUDITOR",
+            subscriptionPlan: "FREE",
+          }
+        });
+      }
+      userId = defaultUser.id;
     }
 
     // 3. Save Audit Results to Database via Prisma
     const invoice = await prisma.invoice.create({
       data: {
-        userId: user.id,
+        userId,
         invoiceNumber: auditResult.invoiceNumber || `INV-${Date.now()}`,
         vendorName: auditResult.vendorName || "Unknown Supplier",
         fileUrl: `/uploads/${originalname}`,
@@ -52,6 +59,16 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
       },
       include: {
         items: true,
+      },
+    });
+
+    // Increment user's dailyScanCount
+    const todayStr = new Date().toISOString().split("T")[0];
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        dailyScanCount: { increment: 1 },
+        lastScanDate: todayStr,
       },
     });
 

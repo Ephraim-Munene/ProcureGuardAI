@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -24,14 +25,40 @@ async function main() {
     });
   }
 
-  // Create default auditor user
+  // Create manually-defined SUPERADMIN account
+  const superadminEmail = "superadmin@procureguard.go.ke";
+  const existingSuperAdmin = await prisma.user.findUnique({
+    where: { email: superadminEmail },
+  });
+
+  if (!existingSuperAdmin) {
+    const hashedPassword = await bcrypt.hash("ChangeMe@2026#", 10);
+    await prisma.user.create({
+      data: {
+        email: superadminEmail,
+        passwordHash: hashedPassword,
+        name: "System Super Administrator",
+        role: "SUPERADMIN",
+        subscriptionPlan: "ENTERPRISE",
+        subscriptionStatus: "ACTIVE",
+        dailyScanCount: 0,
+        lastScanDate: new Date().toISOString().split("T")[0],
+      },
+    });
+    console.log("Created Superadmin account:", superadminEmail);
+  }
+
+  // Default auditor user (for legacy testing)
   await prisma.user.upsert({
     where: { email: "auditor@procureguard.go.ke" },
-    update: {},
+    update: {
+      role: "AUDITOR",
+    },
     create: {
       email: "auditor@procureguard.go.ke",
       name: "Lead Procurement Auditor",
       role: "AUDITOR",
+      subscriptionPlan: "FREE",
     },
   });
 

@@ -5,3 +5,4 @@ stitch_procureguard_oversight_terminal
 frontend/dist
 backend/dist
 backend/prisma/dev.db
+node_modules

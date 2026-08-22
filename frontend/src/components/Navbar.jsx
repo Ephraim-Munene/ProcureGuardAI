@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Bell, Settings, ShieldCheck, User, LogOut, ChevronRight, RefreshCw } from 'lucide-react';
+import { Bell, Settings, ShieldCheck, User, LogOut, ChevronRight, RefreshCw, Zap } from 'lucide-react';
 import { fetchInvoices, fetchSettings } from '../api/client';
+import { useAuth } from '../contexts/AuthContext';
 
 const NAV_LINKS = [
   { to: '/', label: 'Dashboard', end: true },
@@ -10,12 +11,24 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [baseline, setBaseline] = useState('PPRA Baseline 2026');
   const bellRef = useRef(null);
   const profileRef = useRef(null);
+
+  const planLabels = {
+    FREE: 'Basic',
+    PRO: 'Professional Forensic',
+    ENTERPRISE: 'Enterprise Oversight',
+  };
+  const planIcons = {
+    FREE: 'sell',
+    PRO: 'workspace_premium',
+    ENTERPRISE: 'shield',
+  };
 
   useEffect(() => {
     let active = true;
@@ -49,7 +62,8 @@ export default function Navbar() {
 
   const handleSignOut = () => {
     setProfileOpen(false);
-    navigate('/');
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -82,6 +96,21 @@ export default function Navbar() {
           <ShieldCheck className="text-[16px] text-primary" />
           {baseline} Active
         </span>
+
+        {user && (
+          <span className="hidden lg:flex items-center gap-2 border border-outline-variant px-3 py-1 bg-surface-container-low rounded-DEFAULT text-on-surface-variant font-data-mono text-data-mono">
+            <span
+              className="material-symbols-outlined text-[14px] text-primary"
+              style={{ fontSize: 14 }}
+            >
+              {planIcons[user.subscriptionPlan] || 'sell'}
+            </span>
+            <span className="uppercase text-xs">{user.subscriptionPlan}</span>
+            <span className="text-xs text-on-surface-variant">
+              ({user.dailyScanCount}/{user.maxDailyScans || 3})
+            </span>
+          </span>
+        )}
 
         {/* Notifications */}
         <div className="relative" ref={bellRef}>
@@ -154,11 +183,25 @@ export default function Navbar() {
             </div>
           </div>
           {profileOpen && (
-            <div className="absolute right-0 top-full mt-2 w-56 bg-surface-container border border-outline-variant shadow-xl z-50">
+            <div className="absolute right-0 top-full mt-2 w-64 bg-surface-container border border-outline-variant shadow-xl z-50">
               <div className="px-4 py-3 border-b border-outline-variant">
-                <div className="font-body-sm text-body-sm font-medium text-on-surface">Lead Procurement Auditor</div>
-                <div className="font-data-label text-data-label text-on-surface-variant mt-0.5">auditor@procureguard.go.ke</div>
+                <div className="font-body-sm text-body-sm font-medium text-on-surface">
+                  {user?.name || 'Lead Procurement Auditor'}
+                </div>
+                <div className="font-data-label text-data-label text-on-surface-variant mt-0.5">
+                  {user?.email || 'auditor@procureguard.go.ke'}
+                </div>
+                <div className="font-data-mono text-data-mono text-on-surface-variant mt-1 uppercase text-[10px]">
+                  Tier: {user?.subscriptionPlan || 'FREE'}
+                </div>
               </div>
+              <button
+                onClick={() => { setProfileOpen(false); navigate('/pricing'); }}
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-body-sm text-body-sm cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[16px]">workspace_premium</span>
+                Upgrade Plan
+              </button>
               <button
                 onClick={() => { setProfileOpen(false); navigate('/settings'); }}
                 className="w-full flex items-center gap-2 px-4 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-body-sm text-body-sm cursor-pointer"

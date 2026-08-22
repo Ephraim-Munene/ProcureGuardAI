@@ -12,8 +12,10 @@ import {
   AlertTriangle,
   RefreshCw,
   CheckCircle2,
+  CreditCard,
 } from 'lucide-react';
 import { apiClient } from '../api/client';
+import { useAuth } from '../contexts/AuthContext';
 
 const SIDE_ITEMS = [
   { to: '/audits', icon: Terminal, label: 'Audit Terminal', end: false },
@@ -21,10 +23,12 @@ const SIDE_ITEMS = [
   { to: '/risk', icon: Gavel, label: 'Risk Matrix', end: false },
   { to: '/archive', icon: FolderLock, label: 'Legal Archive', end: false },
   { to: '/upload', icon: ScanLine, label: 'Neural Intake', end: false },
+  { to: '/pricing', icon: CreditCard, label: 'License Config', end: false },
 ];
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [healthOpen, setHealthOpen] = useState(false);
   const [healthState, setHealthState] = useState({ checking: false, ok: false, error: null });
   const [signOutOpen, setSignOutOpen] = useState(false);
@@ -46,7 +50,8 @@ export default function Sidebar() {
 
   const confirmSignOut = () => {
     setSignOutOpen(false);
-    navigate('/');
+    logout();
+    navigate('/login');
   };
 
   return (
