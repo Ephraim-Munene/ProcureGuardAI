@@ -1,18 +1,28 @@
 // Root-level Vercel Serverless Function entrypoint.
-// Imports the compiled Express app from the backend and wraps it for Vercel.
+// Wraps the compiled Express app using serverless-http for Vercel.
 const serverless = require("serverless-http");
-const { createApp } = require("../backend/dist/server");
 
+// Lazy-load and cache the Express app to avoid cold-start overhead.
 // Vercel injects environment variables automatically for Serverless Functions.
-// No dotenv needed here — Vercel provides them via process.env at runtime.
+let cachedApp = null;
 
-const app = createApp();
+const getApp = () => {
+  if (cachedApp) return cachedApp;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { createApp } = require("../backend/dist/server");
+  cachedApp = createApp();
+  return cachedApp;
+};
 
 module.exports = async (req, res) => {
   // Vercel warm-up ping
   if (req.headers["x-vercel-warmer"]) {
-    return res.status(200).send("Warmed up");
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    res.end("Warmed up");
+    return;
   }
 
+  const app = getApp();
   return serverless(app)(req, res);
 };
