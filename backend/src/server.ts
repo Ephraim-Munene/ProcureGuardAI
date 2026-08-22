@@ -5,6 +5,7 @@ import path from "path";
 import invoiceRoutes from "./routes/invoiceRoutes";
 import authRoutes from "./routes/authRoutes";
 import mpesaRoutes from "./routes/mpesaRoutes";
+import contactRoutes from "./routes/contactRoutes";
 import { authenticateUser, enforceDailyScanQuota } from "./middlewares/authMiddleware";
 
 // Load .env regardless of the working directory the server is started from
@@ -22,6 +23,7 @@ export const createApp = (): Express => {
   // Public API Routes
   app.use("/api/auth", authRoutes);
   app.use("/api/mpesa", mpesaRoutes);
+  app.use("/api/contact", contactRoutes);
 
   // Healthcheck (public)
   app.get("/health", (_req, res) => {

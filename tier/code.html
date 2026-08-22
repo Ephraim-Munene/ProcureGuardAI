@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ProcureGuard AI - Pricing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353434",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#8e9193",
+                        "on-primary-container": "#626566",
+                        "on-primary-fixed": "#191c1e",
+                        "on-secondary-fixed": "#181b24",
+                        "background": "#131313",
+                        "outline-variant": "#444749",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary-fixed-variant": "#444650",
+                        "surface-bright": "#3a3939",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#444650",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#444749",
+                        "secondary": "#c4c6d1",
+                        "surface-container-highest": "#353434",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#e0e2ed",
+                        "on-primary": "#2e3132",
+                        "primary-fixed": "#e1e2e4",
+                        "on-tertiary-fixed-variant": "#424754",
+                        "surface": "#131313",
+                        "on-surface-variant": "#c4c7c9",
+                        "tertiary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#c4c6d1",
+                        "tertiary-fixed": "#dee2f2",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#b3b5c0",
+                        "on-tertiary": "#2b303d",
+                        "on-tertiary-container": "#5f6472",
+                        "on-tertiary-fixed": "#161b27",
+                        "on-secondary": "#2d3039",
+                        "inverse-primary": "#5c5f60",
+                        "primary-fixed-dim": "#c5c6c8",
+                        "primary": "#ffffff",
+                        "surface-container": "#201f1f",
+                        "primary-container": "#e1e2e4",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed-dim": "#c2c6d6",
+                        "tertiary-container": "#dee2f2",
+                        "surface-tint": "#c5c6c8",
+                        // Custom palette overrides from prompt
+                        "pg-bg": "#0C0E12",
+                        "pg-surface": "#14171F",
+                        "pg-border": "#222733",
+                        "pg-hover": "#1C1F26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "240px",
+                        "unit": "4px",
+                        "margin": "24px",
+                        "table-row-height": "32px",
+                        "gutter": "16px",
+                        "inspector-width": "400px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-xs": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "display-lg": ["Geist"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "data-mono": ["13px", { "lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-xs": ["12px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "data-label": ["10px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0C0E12; color: #e5e2e1; }
+        .border-pg { border-color: #222733; }
+        .bg-pg-surface { background-color: #14171F; }
+        .bg-pg-hover:hover { background-color: #1C1F26; }
+        .text-muted { color: #8e9193; }
+    </style>
+</head>
+<body class="font-body-sm text-body-sm min-h-screen flex flex-col">
+<!-- TopNav - Extracted from Shared Components -->
+<nav class="bg-surface dark:bg-surface flex justify-between items-center w-full px-gutter h-12 sticky top-0 z-50 border-b border-outline-variant">
+<div class="flex items-center space-x-6">
+<div class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">ProcureGuard AI</div>
+<div class="hidden md:flex space-x-6">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Registries</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Neural Scan</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">EACC Reports</a>
+<!-- Active Navigation simulation if this was a top level dest, but it's not strictly matching. Highlighting Dashboard for structure -->
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<span class="font-data-mono text-data-mono text-on-surface-variant hidden md:block">PPRA Baseline 2026 Active</span>
+<div class="flex space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface">settings</span>
+</div>
+<div class="h-6 w-6 rounded-full bg-surface-variant border border-outline-variant overflow-hidden">
+<img alt="E. Munene · Senior Forensic Auditor" class="w-full h-full object-cover" data-alt="A small, professional headshot portrait of a forensic auditor. The lighting is crisp, cool, and flat, suitable for a secure government ID badge. The background is a solid, neutral gray to match the linear-grade GovTech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcOsQ6kf1nXHXyApttf_z6af-WbGgvNCRTZF6Sbkuct8T3xc4SEWDoJC9WMjaDVQaxBGUTKLZLxZg0KML0ALctwL20kLN9gR1Q-hSIGgu-gJf8GZEWTY1Of3KbU3WUXVhkGqxALz6DxRc2VxAn8yxI1XuoZCF8q6ORoUmMGOLHNT1MlqBPZBy2bSP0MsJMxejgZ0AgZGhUEN78leY2PavnMD-tukKxMLP7V-j3jA6dApqN-AZfQF3TRw"/>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto p-8 lg:p-12">
+<header class="mb-12 max-w-4xl">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-2">License Configuration</h1>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Select an oversight tier to provision Neural Scan capacity and forensic analysis capabilities. Billing is calculated per daily operational cycle.</p>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl">
+<!-- Tier 1 -->
+<div class="bg-pg-surface border border-pg p-6 flex flex-col justify-between h-full bg-pg-hover transition-colors rounded-DEFAULT">
+<div>
+<div class="font-data-label text-data-label text-muted uppercase tracking-wider mb-2">TIER 01</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Basic Inspector</h2>
+<div class="flex items-baseline space-x-1 mb-6">
+<span class="font-data-mono text-display-lg text-on-surface">0</span>
+<span class="font-data-mono text-data-mono text-muted">KES / day</span>
+</div>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">3 <span class="font-data-mono text-data-mono text-on-surface">Neural Scans</span> per day</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Standard OCR processing</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Public Registry access</span>
+</div>
+</div>
+</div>
+<button class="w-full py-2 px-4 border border-pg text-on-surface font-data-mono text-data-mono hover:bg-surface-container-highest transition-colors rounded-DEFAULT">
+                        Activate License
+                    </button>
+</div>
+<!-- Tier 2 -->
+<div class="bg-pg-surface border border-primary p-6 flex flex-col justify-between h-full relative shadow-[0_0_15px_rgba(255,255,255,0.05)] rounded-DEFAULT">
+<div class="absolute top-0 right-0 bg-primary text-background font-data-label text-data-label px-2 py-1 rounded-bl-DEFAULT">RECOMMENDED</div>
+<div>
+<div class="font-data-label text-data-label text-primary uppercase tracking-wider mb-2">TIER 02</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Professional Forensic</h2>
+<div class="flex items-baseline space-x-1 mb-6">
+<span class="font-data-mono text-display-lg text-on-surface">10</span>
+<span class="font-data-mono text-data-mono text-muted">KES / day</span>
+</div>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">50 <span class="font-data-mono text-data-mono text-on-surface">Neural Scans</span> per day</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Advanced Anomaly Detection</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Priority EACC Escalation</span>
+</div>
+</div>
+</div>
+<button class="w-full py-2 px-4 bg-primary text-background font-data-mono text-data-mono hover:bg-primary-fixed transition-colors rounded-DEFAULT">
+                        Activate License
+                    </button>
+</div>
+<!-- Tier 3 -->
+<div class="bg-pg-surface border border-pg p-6 flex flex-col justify-between h-full bg-pg-hover transition-colors rounded-DEFAULT">
+<div>
+<div class="font-data-label text-data-label text-muted uppercase tracking-wider mb-2">TIER 03</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Enterprise Oversight</h2>
+<div class="flex items-baseline space-x-1 mb-6">
+<span class="font-data-mono text-display-lg text-on-surface">20</span>
+<span class="font-data-mono text-data-mono text-muted">KES / day</span>
+</div>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">500 <span class="font-data-mono text-data-mono text-on-surface">Neural Scans</span> per day</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Full API Access</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Multi-department Audit Logs</span>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5">check</span>
+<span class="text-on-surface-variant">Custom Risk Benchmarks</span>
+</div>
+</div>
+</div>
+<button class="w-full py-2 px-4 border border-pg text-on-surface font-data-mono text-data-mono hover:bg-surface-container-highest transition-colors rounded-DEFAULT">
+                        Activate License
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

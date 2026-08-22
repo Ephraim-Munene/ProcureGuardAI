@@ -83,3 +83,12 @@ model Setting {
   key   String @unique
   value String
 }
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}

@@ -107,7 +107,21 @@ export default function Sidebar({ mobileOpen = false, onCloseMobile = () => {} }
             );
           })}
         </nav>
-        <div className="p-4 border-t border-outline-variant">
+        <div className="p-4 border-t border-outline-variant flex flex-col gap-1">
+          <button
+            onClick={() => { onCloseMobile(); openHealth(); }}
+            className="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-3 px-2 py-1.5 cursor-pointer"
+          >
+            <Database className="text-[16px]" />
+            <span className="font-body-xs text-body-xs">System Health</span>
+          </button>
+          <button
+            onClick={() => { onCloseMobile(); navigate('/settings'); }}
+            className="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-3 px-2 py-1.5 cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-[16px]">settings</span>
+            <span className="font-body-xs text-body-xs">Settings</span>
+          </button>
           <button
             onClick={() => { onCloseMobile(); setSignOutOpen(true); }}
             className="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-3 px-2 py-1.5 cursor-pointer"

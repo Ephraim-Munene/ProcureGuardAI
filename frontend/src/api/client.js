@@ -96,6 +96,12 @@ export const fetchCurrentUser = async () => {
   return response.data;
 };
 
+// Contact API (public)
+export const submitContactMessage = async (payload) => {
+  const response = await apiClient.post('/contact', payload);
+  return response.data;
+};
+
 // M-Pesa API
 export const initiateMpesaPayment = async (payload) => {
   const response = await apiClient.post('/mpesa/stkpush', payload);

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { TIERS } from '../data/tiers';
 
 const LoginRightPanel = ({
   activeTab,
@@ -17,6 +19,12 @@ const LoginRightPanel = ({
   return (
     <div className="w-full md:w-1/2 lg:w-5/12 flex flex-col justify-center items-center p-4 sm:p-6 md:p-12 bg-surface-container-lowest relative z-20 py-10">
       <div className="w-full max-w-[380px] flex flex-col">
+        <div className="mb-4">
+          <Link to="/" className="text-on-surface-variant hover:text-on-surface font-body-xs text-xs flex items-center gap-1 transition-colors">
+            ← Back to home
+          </Link>
+        </div>
+
         {/* Mobile Header */}
         <div className="flex md:hidden items-center gap-3 mb-10 justify-center">
           <span
@@ -227,29 +235,83 @@ const LoginRightPanel = ({
               </div>
             </div>
 
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               <label
                 className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider"
-                htmlFor="signup-plan"
+                id="signup-plan-label"
               >
                 Initial Scan Tier
               </label>
-              <div className="relative flat-input-focus border border-outline-variant bg-surface flex items-center transition-colors">
-                <span className="material-symbols-outlined text-on-surface-variant absolute left-3" style={{ fontSize: 18 }}>
-                  workspace_premium
-                </span>
-                <select
-                  id="signup-plan"
-                  name="plan"
-                  value={signupForm.plan}
-                  onChange={handleSignupChange}
-                  className="w-full bg-transparent border-none focus:ring-0 font-body-sm text-body-sm text-on-surface py-2.5 pl-10 pr-3 appearance-none"
-                  required
-                >
-                  <option value="FREE">FREE Tier (3 scans/day)</option>
-                  <option value="PRO">PRO Tier (10 KES, 50 scans/day)</option>
-                  <option value="ENTERPRISE">Enterprise Tier (20 KES, 500 scans/day)</option>
-                </select>
+              <div
+                role="radiogroup"
+                aria-labelledby="signup-plan-label"
+                className="flex flex-col gap-2"
+              >
+                {TIERS.map((tier) => {
+                  const selected = signupForm.plan === tier.id;
+                  return (
+                    <button
+                      key={tier.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      onClick={() =>
+                        handleSignupChange({ target: { name: 'plan', value: tier.id } })
+                      }
+                      className={`relative text-left border p-3 transition-colors rounded-DEFAULT cursor-pointer ${
+                        selected
+                          ? 'border-primary bg-surface-container'
+                          : 'border-outline-variant bg-surface hover:border-outline hover:bg-surface-container-lowest'
+                      }`}
+                    >
+                      {tier.badge && (
+                        <span className="absolute top-0 right-0 bg-primary text-background font-data-label text-data-label px-1.5 py-0.5 rounded-bl-DEFAULT">
+                          {tier.badge}
+                        </span>
+                      )}
+                      <div className="flex items-center justify-between gap-2 mb-2 pr-14">
+                        <div className="min-w-0">
+                          <div className="font-data-label text-data-label uppercase tracking-wider mb-0.5">
+                            TIER {tier.num}
+                          </div>
+                          <div className="font-body-sm text-body-sm text-on-surface truncate">
+                            {tier.name}
+                          </div>
+                        </div>
+                        <div className="flex items-baseline gap-1 shrink-0">
+                          <span className="font-data-mono text-data-mono text-on-surface">
+                            {tier.price}
+                          </span>
+                          <span className="font-data-mono text-[10px] text-on-surface-variant">
+                            KES/day
+                          </span>
+                          {selected && (
+                            <span className="material-symbols-outlined text-primary text-[16px] ml-1">
+                              check_circle
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className={`space-y-1 ${selected ? '' : 'hidden'}`}>
+                        {tier.shortFeatures.map((feature, idx) => (
+                          <div key={idx} className="flex items-start gap-2">
+                            <span className="material-symbols-outlined text-primary text-[13px] mt-0.5">
+                              check
+                            </span>
+                            <span className="font-body-xs text-body-xs text-on-surface-variant">
+                              {feature}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      {!selected && (
+                        <div className="font-body-xs text-body-xs text-on-surface-variant truncate">
+                          {tier.shortFeatures[0]}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -271,7 +333,8 @@ const LoginRightPanel = ({
             </button>
 
             <p className="font-body-xs text-body-xs text-on-surface-variant text-center mt-2">
-              You can upgrade your scan tier anytime via the Pricing dashboard.
+              Paid tiers are activated via M-Pesa right after provisioning. You can change your
+              scan tier anytime from the Pricing dashboard.
             </p>
           </form>
         )}

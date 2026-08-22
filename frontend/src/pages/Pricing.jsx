@@ -1,66 +1,30 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import MpesaPaymentModal from '../components/MpesaPaymentModal';
+import { TIERS } from '../data/tiers';
+
+const ACTION_LABELS = {
+  FREE: 'Use Free Tier',
+  PRO: 'Activate License (10 KES)',
+  ENTERPRISE: 'Activate License (20 KES)',
+};
+
+const ACTION_CLASSES = {
+  FREE: 'border border-outline-variant text-on-surface font-data-mono hover:bg-surface-container-highest',
+  PRO: 'bg-primary text-background font-data-mono hover:bg-primary-container',
+  ENTERPRISE: 'border border-outline-variant text-on-surface font-data-mono hover:bg-surface-container-highest',
+};
 
 const Pricing = () => {
   const { user } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const tiers = [
-    {
-      id: 'FREE',
-      name: 'Basic Inspector',
-      price: '0',
-      priceLabel: 'KES / day',
-      badge: null,
-      description: 'Limited forensic scan capacity for individual auditors and evaluation use.',
-      features: [
-        '3 Neural Scans per day',
-        'Standard OCR processing',
-        'Public Registry access',
-        'Limited to 1 concurrent session',
-      ],
-      action: 'Use Free Tier',
-      actionClass: 'border border-outline-variant text-on-surface font-data-mono hover:bg-surface-container-highest',
-    },
-    {
-      id: 'PRO',
-      name: 'Professional Forensic',
-      price: '10',
-      priceLabel: 'KES / day',
-      badge: 'RECOMMENDED',
-      description: 'Full oversight suite with advanced anomaly detection and department escalation pathways.',
-      features: [
-        '50 Neural Scans per day',
-        'Advanced Anomaly Detection',
-        'Priority EACC Escalation',
-        'Audit Trail Export',
-        '5 concurrent sessions',
-      ],
-      action: 'Activate License (10 KES)',
-      actionClass: 'bg-primary text-background font-data-mono hover:bg-primary-container',
-      amount: 10,
-    },
-    {
-      id: 'ENTERPRISE',
-      name: 'Enterprise Oversight',
-      price: '20',
-      priceLabel: 'KES / day',
-      badge: null,
-      description: 'Comprehensive procurement surveillance for multi-department organizations and high-volume audits.',
-      features: [
-        '500 Neural Scans per day',
-        'Full API Access',
-        'Multi-department Audit Logs',
-        'Custom Risk Benchmarks',
-        'Unlimited concurrent sessions',
-      ],
-      action: 'Activate License (20 KES)',
-      actionClass: 'border border-outline-variant text-on-surface font-data-mono hover:bg-surface-container-highest',
-      amount: 20,
-    },
-  ];
+  const tiers = TIERS.map((tier) => ({
+    ...tier,
+    action: ACTION_LABELS[tier.id],
+    actionClass: ACTION_CLASSES[tier.id],
+  }));
 
   const handlePlanSelect = (tier) => {
     if (tier.id === 'FREE') {
@@ -94,7 +58,7 @@ const Pricing = () => {
           return (
             <div
               key={tier.id}
-              className={`bg-surface-container border border-outline-variant p-6 flex flex-col justify-between h-full transition-colors rounded-DEFAULT ${
+              className={`bg-surface-container border border-outline-variant p-6 flex flex-col justify-between h-full transition-colors rounded-DEFAULT relative ${
                 isCurrent ? 'ring-1 ring-primary' : ''
               }`}
             >

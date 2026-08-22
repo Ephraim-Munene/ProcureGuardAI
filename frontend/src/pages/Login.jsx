@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { loginUser, registerUser } from '../api/client';
 import LoginLeftPanel from '../components/LoginLeftPanel';
 import LoginRightPanel from '../components/LoginRightPanel';
+import MpesaPaymentModal from '../components/MpesaPaymentModal';
+import { getTierById } from '../data/tiers';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const [activeTab, setActiveTab] = useState('login');
+  const [searchParams] = useSearchParams();
+  const { login, user } = useAuth();
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get('tab') === 'signup' ? 'signup' : 'login'
+  );
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [pendingPayment, setPendingPayment] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('procureguard_token');
     if (token) {
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [navigate]);
 
@@ -47,7 +53,7 @@ const Login = () => {
     try {
       const data = await loginUser(loginForm);
       login(data.token, data.user);
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err.response?.data?.error || 'Authentication failed');
     } finally {
@@ -59,15 +65,27 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    const selectedTier = signupForm.plan;
+    // Always provision on FREE first; paid tiers are activated via M-Pesa right after.
     try {
-      const data = await registerUser(signupForm);
+      const data = await registerUser({ ...signupForm, plan: 'FREE' });
       login(data.token, data.user);
-      navigate('/', { replace: true });
+      if (selectedTier !== 'FREE') {
+        const tier = getTierById(selectedTier);
+        setPendingPayment({ plan: tier.id, amount: tier.amount });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');
     } finally {
       setLoading(false);
     }
+  };
+
+  const finishSignup = () => {
+    setPendingPayment(null);
+    navigate('/dashboard', { replace: true });
   };
 
   return (
@@ -87,6 +105,15 @@ const Login = () => {
         handleLoginSubmit={handleLoginSubmit}
         handleSignupSubmit={handleSignupSubmit}
       />
+      {pendingPayment && (
+        <MpesaPaymentModal
+          isOpen={!!pendingPayment}
+          onClose={finishSignup}
+          plan={pendingPayment.plan}
+          amount={pendingPayment.amount}
+          onSuccess={finishSignup}
+        />
+      )}
     </div>
   );
 };
