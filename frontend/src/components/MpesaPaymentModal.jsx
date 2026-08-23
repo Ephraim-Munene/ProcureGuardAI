@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { initiateMpesaPayment, checkMpesaStatus, simulateMpesaSuccess } from '../api/client';
+import { initiateMpesaPayment, checkMpesaStatus } from '../api/client';
 import PaymentLoadingSkeleton from '../components/PaymentLoadingSkeleton';
 
 const MpesaPaymentModal = ({ isOpen, onClose, plan, amount, onSuccess }) => {
@@ -31,19 +31,9 @@ const MpesaPaymentModal = ({ isOpen, onClose, plan, amount, onSuccess }) => {
       setErrorMsg(
         err.response?.data?.message ||
           err.response?.data?.error ||
-          'Failed to initiate M-Pesa payment. Using sandbox simulator.'
+          'Failed to start the M-Pesa payment. Please try again.'
       );
-      // Fallback to simulation for sandbox demo
-      try {
-        const simData = await simulateMpesaSuccess('');
-        setErrorMsg('');
-        setStep('success');
-        await loadUser();
-        onSuccess && onSuccess();
-      } catch (simErr) {
-        setErrorMsg('Payment simulation failed. Please try again.');
-        setStep('error');
-      }
+      setStep('error');
     }
   };
 
@@ -73,7 +63,7 @@ const MpesaPaymentModal = ({ isOpen, onClose, plan, amount, onSuccess }) => {
       clearInterval(interval);
       setIsPolling(false);
       if (step === 'processing') {
-        setErrorMsg('Request timed out. Please check your phone or try the simulate option.');
+        setErrorMsg('Request timed out. Please check your phone or try again.');
         setStep('error');
       }
     }, 60000);
@@ -164,21 +154,6 @@ const MpesaPaymentModal = ({ isOpen, onClose, plan, amount, onSuccess }) => {
                   payment
                 </span>
                 Pay {amount} KES via M-Pesa
-              </button>
-
-              <button
-                type="button"
-                onClick={() => simulateMpesaSuccess(checkoutRequestId).then(() => {
-                  loadUser();
-                  onSuccess && onSuccess();
-                  handleClose();
-                })}
-                className="w-full bg-surface-variant text-primary font-data-mono text-data-mono hover:bg-surface-bright transition-colors py-2 border border-outline-variant flex items-center justify-center gap-2 cursor-pointer rounded-DEFAULT"
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>
-                  science
-                </span>
-                Simulate Successful Payment (Sandbox)
               </button>
             </form>
           )}

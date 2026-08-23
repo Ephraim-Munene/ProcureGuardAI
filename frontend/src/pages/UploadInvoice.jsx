@@ -17,7 +17,7 @@ const SCAN_STEPS = [
   { done: false, text: 'Flagging anything unusual' },
 ];
 
-const ACCEPT = '.pdf,.png,.tiff,.jpg,.jpeg';
+const ACCEPT = '.pdf,.png,.jpg,.jpeg';
 
 export default function UploadInvoice() {
   const navigate = useNavigate();
@@ -25,10 +25,12 @@ export default function UploadInvoice() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
+      setUploadError('');
     }
   };
 
@@ -37,6 +39,7 @@ export default function UploadInvoice() {
     setDragOver(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setFile(e.dataTransfer.files[0]);
+      setUploadError('');
     }
   };
 
@@ -56,9 +59,11 @@ export default function UploadInvoice() {
         navigate('/');
       }
     } catch (err) {
-      console.error("Invoice upload failed:", err);
-      setTimeout(() => navigate('/audit/mock-1'), 1500);
-    } finally {
+      console.error('Invoice upload failed:', err);
+      const msg =
+        err.response?.data?.error ||
+        'Something went wrong while scanning your invoice. Please try again.';
+      setUploadError(msg);
       setLoading(false);
     }
   };
@@ -120,7 +125,13 @@ export default function UploadInvoice() {
           </div>
         ) : (
           <div className="w-full max-w-4xl mx-auto">
-            {/* Neural Intake Console */}
+            {uploadError && (
+              <div className="mb-4 p-3 bg-error-container border border-error text-on-error-container font-body-sm text-body-sm flex items-center gap-2">
+                <span className="material-symbols-outlined text-sm">error</span>
+                {uploadError}
+              </div>
+            )}
+            {/* Upload Invoice */}
             <div
               onClick={() => inputRef.current?.click()}
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -150,7 +161,7 @@ export default function UploadInvoice() {
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  {['PDF', 'PNG', 'TIFF'].map((fmt) => (
+                  {['PDF', 'PNG', 'JPG'].map((fmt) => (
                     <span key={fmt} className="font-data-label text-data-label text-on-surface-variant bg-surface-container-low px-2 py-1 rounded border border-outline-variant">
                       {fmt}
                     </span>

@@ -64,6 +64,31 @@ export const authenticateUser = async (
   }
 };
 
+/**
+ * Restricts a route to admin roles (SUPERADMIN). Must run after authenticateUser.
+ */
+export const requireAdmin = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user) {
+    return res.status(401).json({
+      error: "UNAUTHORIZED",
+      message: "Please sign in to continue.",
+    });
+  }
+
+  if (req.user.role !== "SUPERADMIN" && req.user.role !== "ADMIN") {
+    return res.status(403).json({
+      error: "FORBIDDEN",
+      message: "You don't have permission to perform this action.",
+    });
+  }
+
+  next();
+};
+
 export const enforceDailyScanQuota = async (
   req: AuthenticatedRequest,
   res: Response,

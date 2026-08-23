@@ -150,9 +150,13 @@ export const checkPaymentStatus = async (req: AuthenticatedRequest, res: Respons
   }
 };
 
-// Simulation endpoint for Demo/Testing
+// Simulation endpoint for Demo/Testing (disabled in production)
 export const simulateSuccessfulPayment = async (req: AuthenticatedRequest, res: Response) => {
   try {
+    if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({ error: "Simulation is disabled in production" });
+    }
+
     const { checkoutRequestId } = req.body;
 
     const transaction = await prisma.mpesaTransaction.findUnique({

@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import crypto from "crypto";
+import path from "path";
 import { prisma } from "../config/db";
 import { auditInvoiceWithGemini } from "../services/geminiService";
 
@@ -23,12 +25,16 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     }
     const userId = authenticatedUser.id;
 
+    // Store a hash-based filename — never the raw client-supplied name
+    const ext = path.extname(originalname || "").toLowerCase().slice(0, 10);
+    const storedName = `${crypto.randomUUID()}${ext}`;
+
     // 3. Save Audit Results to Database via Prisma
     const invoice = await prisma.invoice.create({
       data: {
         userId,
         invoiceNumber: auditResult.invoiceNumber || `INV-${Date.now()}`,        vendorName: auditResult.vendorName || "Unknown Supplier",
-        fileUrl: `/uploads/${originalname}`,
+        fileUrl: `/uploads/${storedName}`,
         totalAmountKes: Number(auditResult.totalAmountKes) || 0,
         overallRiskScore: Number(auditResult.overallRiskScore) || 0,
         riskLevel: auditResult.riskLevel || "MEDIUM",

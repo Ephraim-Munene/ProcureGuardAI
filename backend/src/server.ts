@@ -1,12 +1,14 @@
 import express, { Express } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import helmet from "helmet";
 import path from "path";
 import invoiceRoutes from "./routes/invoiceRoutes";
 import authRoutes from "./routes/authRoutes";
 import mpesaRoutes from "./routes/mpesaRoutes";
 import contactRoutes from "./routes/contactRoutes";
 import { authenticateUser, enforceDailyScanQuota } from "./middlewares/authMiddleware";
+import { generalLimiter } from "./middlewares/rateLimiters";
 
 // Load .env regardless of the working directory the server is started from
 // (works for both src/ via ts-node and dist/ compiled output)
@@ -16,9 +18,21 @@ dotenv.config();
 export const createApp = (): Express => {
   const app = express();
 
-  app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
+  app.use(helmet());
+  // Explicit allowed origins via CORS_ORIGIN (comma-separated). Falls back to
+  // "*" in development only so local frontends keep working.
+  const allowedOrigins = (process.env.CORS_ORIGIN || "")
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean);
+  app.use(
+    cors({
+      origin: allowedOrigins.length ? allowedOrigins : "*",
+    })
+  );
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use("/api", generalLimiter);
 
   // Public API Routes
   app.use("/api/auth", authRoutes);
