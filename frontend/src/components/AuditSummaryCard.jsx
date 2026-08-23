@@ -9,7 +9,7 @@ export default function AuditSummaryCard({ invoice, totalInflationAmount }) {
       <div className="md:col-span-2 bg-surface-container-low border border-outline-variant p-4 rounded-DEFAULT">
         <span className="font-data-label text-data-label text-on-surface-variant uppercase block mb-2">Executive Summary</span>
         <p className="font-body-sm text-body-sm text-on-surface leading-relaxed">
-          Forensic model detects{' '}
+          We detected{' '}
           {critical ? <strong className="text-error">catastrophic price inflation</strong> : <strong>pricing variance</strong>}{' '}
           across supplied items for {invoice.vendorName}. {invoice.summaryNotes}
         </p>

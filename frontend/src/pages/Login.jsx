@@ -55,7 +55,7 @@ const Login = () => {
       login(data.token, data.user);
       navigate('/', { replace: true });
     } catch (err) {
-      setError(err.response?.data?.error || 'Authentication failed');
+      setError(err.response?.data?.message || 'Wrong email or password. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     const selectedTier = signupForm.plan;
-    // Always provision on FREE first; paid tiers are activated via M-Pesa right after.
+    // Always create the account on FREE first; paid plans are activated via M-Pesa right after.
     try {
       const data = await registerUser({ ...signupForm, plan: 'FREE' });
       login(data.token, data.user);
@@ -77,7 +77,7 @@ const Login = () => {
         navigate('/', { replace: true });
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed');
+      setError(err.response?.data?.message || 'Could not create your account. Please try again.');
     } finally {
       setLoading(false);
     }

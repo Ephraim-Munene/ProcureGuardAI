@@ -72,7 +72,7 @@ export default function AuditTerminal() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Terminal className="text-[20px] text-primary" />
-          <h1 className="font-headline-md text-headline-md text-on-surface">Audit Terminal</h1>
+          <h1 className="font-headline-md text-headline-md text-on-surface">My Invoices</h1>
           <span className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider">
             {invoices.length} records · {counts.FLAGGED} flagged · {counts.RESOLVED} resolved
           </span>

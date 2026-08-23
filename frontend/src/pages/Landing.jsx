@@ -199,27 +199,27 @@ export default function Landing() {
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container border border-outline-variant rounded-full text-primary font-data-mono text-data-mono text-xs uppercase tracking-wider">
             <ShieldCheck className="text-[14px]" />
-            PPRA Baseline 2026 · Neural Audit Surveillance
+            Smart Invoice Auditing for Public Procurement
           </div>
           <h1 className="font-display-lg text-3xl sm:text-5xl lg:text-6xl text-on-surface font-extrabold tracking-tight leading-tight">
-            Autonomous Oversight & Fraud Detection for Public Procurement
+            Stop Overpricing Before It Costs You
           </h1>
           <p className="font-body-sm text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
-            ProcureGuard AI leverages advanced Neural OCR and automated benchmark verification to expose price gouging, flag inflated vendor invoices, and safeguard public funds across government departments.
+            Upload an invoice and instantly see which items are overpriced, which quantities look inflated, and how much you could be overpaying. Every account keeps its data private and separate.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
             <Link
               to="/login?tab=signup"
               className="px-6 py-3.5 bg-primary text-background font-data-mono text-data-mono hover:bg-primary-container transition-colors rounded-DEFAULT flex items-center gap-2 font-bold cursor-pointer text-sm shadow-lg"
             >
-              <span>Provision Agent Account</span>
+              <span>Create Free Account</span>
               <ArrowRight className="text-[16px]" />
             </Link>
             <button
               onClick={() => scrollToSection('features')}
               className="px-6 py-3.5 border border-outline-variant text-on-surface hover:bg-surface-container-high transition-colors rounded-DEFAULT font-data-mono text-data-mono text-sm cursor-pointer"
             >
-              Explore Capabilities
+              See How It Works
             </button>
           </div>
 
@@ -231,7 +231,7 @@ export default function Landing() {
                 <span className="w-3 h-3 rounded-full bg-surface-tint inline-block"></span>
                 <span className="w-3 h-3 rounded-full bg-primary inline-block"></span>
                 <span className="font-data-label text-data-label text-on-surface-variant ml-2 uppercase">
-                  Live Audit Terminal · GOV-KE-2026
+                  Sample Invoice Check
                 </span>
               </div>
               <span className="font-data-mono text-[10px] text-primary bg-primary/10 border border-primary/30 px-2 py-0.5 rounded">
@@ -241,14 +241,14 @@ export default function Landing() {
             <div className="font-data-mono text-xs space-y-2 text-on-surface-variant">
               <div className="flex justify-between items-center bg-surface-container-low p-2 border border-outline-variant/50">
                 <span>INVOICE: #GOV-KE-2026-9812</span>
-                <span className="text-error font-bold">CRITICAL · 88.4 RISK</span>
+                <span className="text-error font-bold">FLAGGED · HIGH RISK</span>
               </div>
               <div className="flex justify-between items-center bg-surface-container-low p-2 border border-outline-variant/50">
                 <span>VENDOR: Apex Global Supplies Ltd</span>
                 <span>EXCESS MARKUP: +166%</span>
               </div>
               <div className="text-[11px] text-outline pt-1">
-                ✓ Neural OCR verified line items against PPRA 2026 baseline registry.
+                ✓ Prices checked against current market rates.
               </div>
             </div>
           </div>
@@ -259,13 +259,13 @@ export default function Landing() {
       <section id="features" className="py-20 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="font-data-label text-data-label text-primary uppercase tracking-widest block mb-2">
-            FORENSIC CAPABILITIES
+            WHAT YOU GET
           </span>
           <h2 className="font-display-lg text-2xl sm:text-4xl text-on-surface font-bold">
-            Built for Rigorous Public Oversight
+            Everything You Need to Audit Invoices
           </h2>
           <p className="font-body-sm text-on-surface-variant mt-3">
-            Designed with GovTech precision to automate invoice auditing without losing granular investigative control.
+            Simple tools that do the hard work of invoice checking for you — no training needed.
           </p>
         </div>
 
@@ -275,13 +275,13 @@ export default function Landing() {
               <div className="w-10 h-10 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-primary mb-4">
                 <FileText className="text-[20px]" />
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Neural OCR Intake</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Reads Any Invoice</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Upload scanned PDFs, physical invoices, or tabular tenders. Neural models parse line items instantly.
+                Upload a PDF or a photo of a paper invoice. We pull out every line item automatically.
               </p>
             </div>
             <span className="font-data-label text-[10px] text-primary uppercase mt-6 tracking-wider">
-              Multi-format Parser
+              PDF & Photo Support
             </span>
           </div>
 
@@ -290,9 +290,9 @@ export default function Landing() {
               <div className="w-10 h-10 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-error mb-4">
                 <AlertTriangle className="text-[20px]" />
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Automated Anomaly Detection</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Spots Overcharging</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Compares invoiced unit prices against official PPRA benchmark ceilings to calculate excess markups.
+                Compares each price you were billed against typical market prices to show where you're overpaying.
               </p>
             </div>
             <span className="font-data-label text-[10px] text-error uppercase mt-6 tracking-wider">
@@ -305,13 +305,13 @@ export default function Landing() {
               <div className="w-10 h-10 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-primary mb-4">
                 <Landmark className="text-[20px]" />
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Vendor Registry Cross-Check</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Vendor History</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Inspect vendor compliance history, KRA PIN validity, and multi-department tender frequency.
+                See which vendors keep showing up on flagged invoices across your records.
               </p>
             </div>
             <span className="font-data-label text-[10px] text-primary uppercase mt-6 tracking-wider">
-              Public Ledger Sync
+              Clear Vendor Reports
             </span>
           </div>
 
@@ -320,13 +320,13 @@ export default function Landing() {
               <div className="w-10 h-10 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-primary mb-4">
                 <Gavel className="text-[20px]" />
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">EACC Escalation Pathways</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Easy Reporting</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Generate audit briefs and flag fraudulent transactions directly for statutory investigation and recovery.
+                Export a clear report of anything suspicious so you can hand it to the right people.
               </p>
             </div>
             <span className="font-data-label text-[10px] text-primary uppercase mt-6 tracking-wider">
-              Legal Brief Export
+              One-Click Reports
             </span>
           </div>
         </div>
@@ -337,13 +337,13 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="font-data-label text-data-label text-primary uppercase tracking-widest block mb-2">
-              OPERATIONAL WORKFLOW
+              HOW IT WORKS
             </span>
             <h2 className="font-display-lg text-2xl sm:text-4xl text-on-surface font-bold">
-              Four Steps to Absolute Accountability
+              From Upload to Answer in Four Steps
             </h2>
             <p className="font-body-sm text-on-surface-variant mt-3">
-              Streamlined forensic pipeline from document upload to legal escalation.
+              No paperwork headaches — just upload, review, and act.
             </p>
           </div>
 
@@ -352,9 +352,9 @@ export default function Landing() {
               <div className="w-12 h-12 rounded-full bg-primary text-background font-data-mono text-base font-bold flex items-center justify-center mb-4">
                 01
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Upload Submission</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">1. Upload Your Invoice</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Import procurement invoices, delivery notes, or tender proposals securely.
+                Add an invoice, delivery note, or tender document. Only you can see it.
               </p>
             </div>
 
@@ -362,9 +362,9 @@ export default function Landing() {
               <div className="w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono text-base font-bold flex items-center justify-center mb-4">
                 02
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Neural Scan & OCR</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">2. Automatic Scan</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                AI extracts quantities, unit prices, vendor names, and calculates variances automatically.
+                We read out quantities, unit prices, and vendor details for you.
               </p>
             </div>
 
@@ -372,9 +372,9 @@ export default function Landing() {
               <div className="w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono text-base font-bold flex items-center justify-center mb-4">
                 03
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Forensic Review</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">3. Clear Results</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Analyze price inflation heatmaps, vendor risk scores, and department anomaly trends.
+                See exactly which items are overpriced and by how much, in plain numbers.
               </p>
             </div>
 
@@ -382,9 +382,9 @@ export default function Landing() {
               <div className="w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono text-base font-bold flex items-center justify-center mb-4">
                 04
               </div>
-              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Justify or Escalate</h3>
+              <h3 className="font-headline-md text-headline-md text-on-surface mb-2">4. Act on It</h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Mark items as justified or flag critical discrepancies for official anti-corruption investigation.
+                Mark items as okay, or flag the suspicious ones and export a report.
               </p>
             </div>
           </div>
@@ -395,13 +395,13 @@ export default function Landing() {
       <section id="pricing" className="py-20 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="font-data-label text-data-label text-primary uppercase tracking-widest block mb-2">
-            LICENSE CONFIGURATION
+            SIMPLE PRICING
           </span>
           <h2 className="font-display-lg text-2xl sm:text-4xl text-on-surface font-bold">
-            Select Your Oversight Tier
+            Pick a Plan That Fits
           </h2>
           <p className="font-body-sm text-on-surface-variant mt-3">
-            Provision Neural Scan capacity and forensic analysis capabilities. Billing is calculated per daily operational cycle.
+            Every plan includes a daily allowance of invoice scans. Upgrade or cancel anytime.
           </p>
         </div>
 
@@ -459,7 +459,7 @@ export default function Landing() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <span className="font-data-label text-data-label text-primary uppercase tracking-widest block mb-2">
-              KNOWLEDGE BASE
+              FAQ
             </span>
             <h2 className="font-display-lg text-2xl sm:text-4xl text-on-surface font-bold">
               Frequently Asked Questions
@@ -470,19 +470,19 @@ export default function Landing() {
             {[
               {
                 q: 'What is ProcureGuard AI?',
-                a: 'ProcureGuard AI is an autonomous GovTech platform built to audit public procurement invoices, detect price inflation against PPRA baseline benchmarks, and assist oversight bodies in recovering public funds.',
+                a: 'ProcureGuard AI checks procurement invoices for you. Upload an invoice and it flags overpriced items, inflated quantities, and anything unusual — so you only pay fair prices.',
               },
               {
-                q: 'How does the Neural Scan OCR work?',
-                a: 'Our document intake engine parses uploaded PDF invoices or tender documents, extracts line items, quantities, and unit prices, and instantly correlates them against official market benchmarks.',
+                q: 'How does the invoice scanning work?',
+                a: 'Upload a PDF or a photo of your invoice. We read out every line item, quantity, and unit price, then compare each price against typical market rates to spot overcharging.',
               },
               {
                 q: 'How do daily scan quotas work?',
-                a: 'Each account tier includes a set number of daily neural scans (e.g. 3 for Free, 50 for Professional, 500 for Enterprise). Quotas reset at midnight East Africa Time (EAT).',
+                a: 'Each plan includes a daily allowance of invoice scans (3 on Free, 50 on Professional, 500 on Enterprise). Your allowance resets at midnight East Africa Time (EAT).',
               },
               {
                 q: 'How is M-Pesa billing handled?',
-                a: 'Paid tiers (Professional at 10 KES/day and Enterprise at 20 KES/day) are provisioned via M-Pesa STK push. You receive a payment prompt on your mobile phone upon activation or upgrade.',
+                a: 'Paid plans (Professional at 10 KES/day and Enterprise at 20 KES/day) are paid via M-Pesa. You get a payment prompt on your phone when you activate or upgrade — no card needed.',
               },
             ].map((faq, idx) => {
               const isOpen = openFaq === idx;
@@ -521,13 +521,13 @@ export default function Landing() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
             <span className="font-data-label text-data-label text-primary uppercase tracking-widest block mb-2">
-              SECURE DESK
+              CONTACT US
             </span>
             <h2 className="font-display-lg text-2xl sm:text-4xl text-on-surface font-bold mb-4">
-              Get in Touch with Our Oversight Team
+              Talk to Us
             </h2>
             <p className="font-body-sm text-on-surface-variant mb-8 leading-relaxed">
-              Have questions about agency onboarding, custom benchmark integrations, or enterprise surveillance? Send a secure dispatch to our technical desk.
+              Questions about getting started, custom setups, or team plans? We're happy to help.
             </p>
 
             <div className="space-y-6">
@@ -536,7 +536,7 @@ export default function Landing() {
                   <Mail className="text-[18px]" />
                 </div>
                 <div>
-                  <div className="font-data-label text-data-label text-on-surface-variant uppercase">Secure Email</div>
+                  <div className="font-data-label text-data-label text-on-surface-variant uppercase">Email</div>
                   <div className="font-data-mono text-data-mono text-on-surface mt-0.5">desk@procureguard.go.ke</div>
                 </div>
               </div>
@@ -546,7 +546,7 @@ export default function Landing() {
                   <Phone className="text-[18px]" />
                 </div>
                 <div>
-                  <div className="font-data-label text-data-label text-on-surface-variant uppercase">Oversight Hotline</div>
+                  <div className="font-data-label text-data-label text-on-surface-variant uppercase">Phone</div>
                   <div className="font-data-mono text-data-mono text-on-surface mt-0.5">+254 (020) 2800 000</div>
                 </div>
               </div>
@@ -583,7 +583,7 @@ export default function Landing() {
             <form onSubmit={handleContactSubmit} className="space-y-4">
               <div>
                 <label className="font-data-label text-data-label text-on-surface-variant uppercase block mb-1.5">
-                  Agent / Name
+                  Your Name
                 </label>
                 <input
                   type="text"
@@ -694,7 +694,7 @@ export default function Landing() {
 
           <div className="font-data-label text-data-label text-on-surface-variant text-center md:text-right">
             © 2026 ProcureGuard AI • Public Procurement Oversight
-            <div className="text-[10px] text-outline mt-1">Encrypted GovTech Surveillance Protocol v2.4</div>
+            <div className="text-[10px] text-outline mt-1">Simple, private, invoice auditing</div>
           </div>
         </div>
       </footer>

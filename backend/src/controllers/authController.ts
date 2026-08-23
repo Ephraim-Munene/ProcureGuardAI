@@ -4,14 +4,17 @@ import jwt from "jsonwebtoken";
 import prisma from "../config/db";
 import { AuthenticatedRequest, PLAN_LIMITS } from "../middlewares/authMiddleware";
 
-const JWT_SECRET = process.env.JWT_SECRET || "procureguard_super_secret_jwt_key_2026";
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is required");
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const register = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { name, email, password, plan } = req.body;
 
     if (!email || !password || !name) {
-      return res.status(400).json({ error: "Name, Email and Password are required" });
+      return res.status(400).json({ message: "Please fill in your name, email, and password." });
     }
 
     const existingUser = await prisma.user.findUnique({
@@ -19,7 +22,7 @@ export const register = async (req: AuthenticatedRequest, res: Response) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({ error: "An account with this email already exists" });
+      return res.status(400).json({ message: "An account with this email already exists. Try signing in instead." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -53,7 +56,7 @@ export const register = async (req: AuthenticatedRequest, res: Response) => {
     const { passwordHash, ...userWithoutPassword } = newUser;
 
     return res.status(201).json({
-      message: "Agent provisioned successfully",
+      message: "Account created successfully",
       token,
       user: {
         ...userWithoutPassword,
@@ -62,7 +65,7 @@ export const register = async (req: AuthenticatedRequest, res: Response) => {
     });
   } catch (error: any) {
     console.error("Registration Error:", error);
-    return res.status(500).json({ error: "Failed to register user", details: error.message });
+    return res.status(500).json({ message: "Something went wrong while creating your account. Please try again." });
   }
 };
 
@@ -71,7 +74,7 @@ export const login = async (req: AuthenticatedRequest, res: Response) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+      return res.status(400).json({ message: "Please enter your email and password." });
     }
 
     const user = await prisma.user.findUnique({
@@ -79,12 +82,12 @@ export const login = async (req: AuthenticatedRequest, res: Response) => {
     });
 
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ message: "Wrong email or password. Please try again." });
     }
 
     const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ message: "Wrong email or password. Please try again." });
     }
 
     const todayStr = new Date().toISOString().split("T")[0];
@@ -107,7 +110,7 @@ export const login = async (req: AuthenticatedRequest, res: Response) => {
     const { passwordHash, ...userWithoutPassword } = user;
 
     return res.json({
-      message: "Authentication successful",
+      message: "Signed in successfully",
       token,
       user: {
         ...userWithoutPassword,
@@ -118,7 +121,7 @@ export const login = async (req: AuthenticatedRequest, res: Response) => {
     });
   } catch (error: any) {
     console.error("Login Error:", error);
-    return res.status(500).json({ error: "Failed to authenticate", details: error.message });
+    return res.status(500).json({ message: "Something went wrong while signing you in. Please try again." });
   }
 };
 

@@ -48,7 +48,7 @@ const LoginRightPanel = ({
                 : 'border-transparent text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            Terminal Login
+            Sign In
           </button>
           <button
             onClick={() => setActiveTab('signup')}
@@ -58,7 +58,7 @@ const LoginRightPanel = ({
                 : 'border-transparent text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            Agent Provisioning
+            Create Account
           </button>
         </div>
 
@@ -78,7 +78,7 @@ const LoginRightPanel = ({
                 className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider"
                 htmlFor="login-email"
               >
-                Investigative Agency Email
+                Email Address
               </label>
               <div className="relative flat-input-focus border border-outline-variant bg-surface flex items-center transition-colors">
                 <span className="material-symbols-outlined text-on-surface-variant absolute left-3" style={{ fontSize: 18 }}>
@@ -91,7 +91,7 @@ const LoginRightPanel = ({
                   value={loginForm.email}
                   onChange={handleLoginChange}
                   className="w-full bg-transparent border-none focus:ring-0 font-body-sm text-body-sm text-on-surface py-2.5 pl-10 pr-3 placeholder:text-outline"
-                  placeholder="agent.id@eacc.gov"
+                  placeholder="you@example.com"
                   required
                 />
               </div>
@@ -103,7 +103,7 @@ const LoginRightPanel = ({
                   className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider"
                   htmlFor="login-password"
                 >
-                  Passphrase
+                  Password
                 </label>
               </div>
               <div className="relative flat-input-focus border border-outline-variant bg-surface flex items-center transition-colors">
@@ -144,7 +144,7 @@ const LoginRightPanel = ({
                   <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
                     login
                   </span>
-                  Authenticate Session
+                  Sign In
                 </>
               )}
             </button>
@@ -183,7 +183,7 @@ const LoginRightPanel = ({
                 className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider"
                 htmlFor="signup-email"
               >
-                Investigative Agency Email
+                Email Address
               </label>
               <div className="relative flat-input-focus border border-outline-variant bg-surface flex items-center transition-colors">
                 <span className="material-symbols-outlined text-on-surface-variant absolute left-3" style={{ fontSize: 18 }}>
@@ -196,7 +196,7 @@ const LoginRightPanel = ({
                   value={signupForm.email}
                   onChange={handleSignupChange}
                   className="w-full bg-transparent border-none focus:ring-0 font-body-sm text-body-sm text-on-surface py-2.5 pl-10 pr-3 placeholder:text-outline"
-                  placeholder="agent.id@eacc.gov"
+                  placeholder="you@example.com"
                   required
                 />
               </div>
@@ -207,7 +207,7 @@ const LoginRightPanel = ({
                 className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider"
                 htmlFor="signup-password"
               >
-                Passphrase
+                Password
               </label>
               <div className="relative flat-input-focus border border-outline-variant bg-surface flex items-center transition-colors">
                 <span className="material-symbols-outlined text-on-surface-variant absolute left-3" style={{ fontSize: 18 }}>
@@ -240,7 +240,7 @@ const LoginRightPanel = ({
                 className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider"
                 id="signup-plan-label"
               >
-                Initial Scan Tier
+                Choose Your Plan
               </label>
               <div
                 role="radiogroup"
@@ -327,14 +327,14 @@ const LoginRightPanel = ({
                   <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
                     workspace_premium
                   </span>
-                  Provision Agent Account
+                  Create Account
                 </>
               )}
             </button>
 
             <p className="font-body-xs text-body-xs text-on-surface-variant text-center mt-2">
-              Paid tiers are activated via M-Pesa right after provisioning. You can change your
-              scan tier anytime from the Pricing dashboard.
+              Paid plans are activated via M-Pesa right after you create your account. You can
+              change your plan anytime on the Pricing page.
             </p>
           </form>
         )}
@@ -342,10 +342,10 @@ const LoginRightPanel = ({
         {/* Footer */}
         <div className="mt-12 text-center flex flex-col items-center gap-1">
           <span className="font-data-mono text-data-mono text-on-surface-variant text-[11px] uppercase opacity-70">
-            Secure Terminal v2.4.0-Forensic // Encrypted Session
+            Your data is private and encrypted
           </span>
           <span className="font-body-xs text-body-xs text-outline text-[11px]">
-            Unauthorized access attempts are logged and flagged for review.
+            Each account only sees its own invoices and reports.
           </span>
         </div>
       </div>

@@ -43,9 +43,9 @@ const Pricing = () => {
   return (
     <div className="bg-surface-container-lowest text-on-surface min-h-[calc(100vh-80px)] pb-12">
       <header className="mb-12 max-w-4xl px-gutter">
-        <h1 className="font-display-lg text-display-lg text-on-surface mb-2">License Configuration</h1>
+        <h1 className="font-display-lg text-display-lg text-on-surface mb-2">Plans & Billing</h1>
         <p className="text-on-surface-variant font-body-sm text-body-sm">
-          Select an oversight tier to provision Neural Scan capacity and forensic analysis capabilities.
+          Choose the plan that fits how many invoices you need to check each day.
           Billing is calculated per daily operational cycle.
         </p>
       </header>

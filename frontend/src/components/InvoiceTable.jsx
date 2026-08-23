@@ -35,7 +35,7 @@ export default function InvoiceTable({ invoices, loading, onNavigate }) {
       <div className="p-3 border-b border-outline-variant flex flex-wrap gap-y-2 justify-between items-center bg-surface-container-low z-10 sticky top-0">
         <h2 className="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
           <SlidersHorizontal className="text-[18px]" />
-          Live Audit Registry
+          Your Invoices
         </h2>
         <div className="flex flex-wrap gap-2">
           <input
@@ -64,7 +64,7 @@ export default function InvoiceTable({ invoices, loading, onNavigate }) {
       {loading ? (
         <div className="p-16 text-center space-y-3 text-on-surface-variant">
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="font-data-mono text-data-mono text-sm">Querying secure forensic ledger...</p>
+          <p className="font-data-mono text-data-mono text-sm">Loading your invoices...</p>
         </div>
       ) : filtered.length === 0 ? (
         <div className="p-16 text-center">

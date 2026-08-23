@@ -11,10 +11,10 @@ import {
 import { auditInvoice } from '../api/client';
 
 const SCAN_STEPS = [
-  { done: true, text: 'OCR text extracted (99.8% confidence)' },
-  { done: true, text: 'Line items structured' },
-  { done: false, active: true, text: 'Cross-referencing PPRA index prices...' },
-  { done: false, text: 'Fraud vector analysis' },
+  { done: true, text: 'Invoice received' },
+  { done: true, text: 'Reading invoice details' },
+  { done: false, active: true, text: 'Checking prices against market rates...' },
+  { done: false, text: 'Flagging anything unusual' },
 ];
 
 const ACCEPT = '.pdf,.png,.tiff,.jpg,.jpeg';
@@ -56,7 +56,7 @@ export default function UploadInvoice() {
         navigate('/');
       }
     } catch (err) {
-      console.error('Audit upload error:', err);
+      console.error("Invoice upload failed:", err);
       setTimeout(() => navigate('/audit/mock-1'), 1500);
     } finally {
       setLoading(false);
@@ -84,14 +84,14 @@ export default function UploadInvoice() {
                 </div>
                 <div>
                   <div className="font-body-sm text-body-sm font-medium text-on-surface">
-                    Gemini 3.5 Flash OCR & PPRA Benchmark Cross-Examination
+                    Scanning your invoice
                   </div>
                   <div className="font-data-label text-data-label text-on-surface-variant mt-1 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-secondary"></span> Processing
                   </div>
                 </div>
               </div>
-              <div className="font-data-mono text-data-mono text-on-surface-variant max-w-full truncate">{file?.name || 'Scanning...'}</div>
+              <div className="font-data-mono text-data-mono text-on-surface-variant max-w-full truncate">{file?.name || "Working..."}</div>
             </div>
 
             <div className="space-y-3 font-data-mono text-data-mono text-sm">
@@ -114,7 +114,7 @@ export default function UploadInvoice() {
                 onClick={() => setLoading(false)}
                 className="bg-transparent border border-outline-variant text-on-surface hover:border-on-surface transition-colors rounded px-4 py-1.5 font-body-sm text-body-sm cursor-pointer"
               >
-                Cancel Scan
+                Cancel
               </button>
             </div>
           </div>
@@ -133,9 +133,9 @@ export default function UploadInvoice() {
               <div className="w-16 h-16 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center mb-6 group-hover:border-primary transition-colors">
                 <Upload className="text-[32px] text-on-surface-variant group-hover:text-primary transition-colors" />
               </div>
-              <h2 className="font-headline-md text-headline-md text-on-surface mb-2 text-center">Neural Intake Console</h2>
+              <h2 className="font-headline-md text-headline-md text-on-surface mb-2 text-center">Upload an Invoice</h2>
               <p className="font-body-sm text-body-sm text-on-surface-variant text-center mb-6 max-w-md border-b border-dashed border-outline-variant pb-6">
-                Drop County Procurement Invoices, LPOs, or Tender Receipts here to initiate scanning.
+                Drop your invoice, LPO, or receipt here and we'll check it for overpricing.
               </p>
 
               {file && (
@@ -180,7 +180,7 @@ export default function UploadInvoice() {
                     : 'bg-surface-container-lowest text-on-surface-variant border border-outline-variant cursor-not-allowed'
                 }`}
               >
-                Initiate Neural Scan
+                Scan Invoice
               </button>
 
               <div className="absolute inset-0 border-2 border-dashed border-outline-variant rounded-lg m-2 pointer-events-none group-hover:border-primary/50 transition-colors"></div>

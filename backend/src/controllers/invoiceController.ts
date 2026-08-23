@@ -14,31 +14,20 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     // 1. Analyze document using Gemini or dynamic forensic parser
     const auditResult = await auditInvoiceWithGemini(buffer, mimetype, originalname);
 
-    // 2. Fetch authenticated user or create default auditor user
     const authenticatedUser = (req as any).user;
-    let userId = authenticatedUser?.id;
-
-    if (!userId) {
-      let defaultUser = await prisma.user.findFirst();
-      if (!defaultUser) {
-        defaultUser = await prisma.user.create({
-          data: {
-            email: "auditor@procureguard.go.ke",
-            name: "Lead Procurement Auditor",
-            role: "AUDITOR",
-            subscriptionPlan: "FREE",
-          }
-        });
-      }
-      userId = defaultUser.id;
+    if (!authenticatedUser?.id) {
+      return res.status(401).json({
+        error: "UNAUTHORIZED",
+        message: "Please sign in to upload invoices.",
+      });
     }
+    const userId = authenticatedUser.id;
 
     // 3. Save Audit Results to Database via Prisma
     const invoice = await prisma.invoice.create({
       data: {
         userId,
-        invoiceNumber: auditResult.invoiceNumber || `INV-${Date.now()}`,
-        vendorName: auditResult.vendorName || "Unknown Supplier",
+        invoiceNumber: auditResult.invoiceNumber || `INV-${Date.now()}`,        vendorName: auditResult.vendorName || "Unknown Supplier",
         fileUrl: `/uploads/${originalname}`,
         totalAmountKes: Number(auditResult.totalAmountKes) || 0,
         overallRiskScore: Number(auditResult.overallRiskScore) || 0,
@@ -80,9 +69,17 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
   }
 };
 
-export const getInvoices = async (_req: Request, res: Response) => {
+export const getInvoices = async (req: Request, res: Response) => {
   try {
+    const userId = (req as any).user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        error: "UNAUTHORIZED",
+        message: "Please sign in to view your invoices.",
+      });
+    }
     const invoices = await prisma.invoice.findMany({
+      where: { userId },
       include: { items: true },
       orderBy: { createdAt: "desc" },
     });
@@ -95,12 +92,15 @@ export const getInvoices = async (_req: Request, res: Response) => {
 
 export const getInvoiceById = async (req: Request, res: Response) => {
   try {
+    const userId = (req as any).user?.id;
     const { id } = req.params;
     const invoice = await prisma.invoice.findUnique({
       where: { id },
       include: { items: true },
     });
-    if (!invoice) return res.status(404).json({ error: "Invoice not found" });
+    if (!invoice || invoice.userId !== userId) {
+      return res.status(404).json({ error: "Invoice not found" });
+    }
     return res.json(invoice);
   } catch (error) {
     console.error("Error fetching invoice:", error);
@@ -110,11 +110,17 @@ export const getInvoiceById = async (req: Request, res: Response) => {
 
 export const updateInvoiceStatus = async (req: Request, res: Response) => {
   try {
+    const userId = (req as any).user?.id;
     const { id } = req.params;
     const { status } = req.body;
 
     if (!["CLEAN", "FLAGGED", "RESOLVED"].includes(status)) {
       return res.status(400).json({ error: "Invalid status value" });
+    }
+
+    const existing = await prisma.invoice.findUnique({ where: { id } });
+    if (!existing || existing.userId !== userId) {
+      return res.status(404).json({ error: "Invoice not found" });
     }
 
     const updated = await prisma.invoice.update({

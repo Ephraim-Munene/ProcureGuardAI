@@ -8,3 +8,5 @@ backend/prisma/dev.db
 node_modules
 .vercel
 .env*
+SECURITY_TODO.txt
+tier

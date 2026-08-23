@@ -32,7 +32,7 @@ export default function AuditDetails() {
       const data = await fetchInvoiceById(id);
       setInvoice(data);
     } catch (err) {
-      console.error('Failed to load invoice details, generating dynamic forensic report:', err);
+      console.error('Failed to load invoice details, showing sample data:', err);
 
       const numericHash = id ? id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 1234;
       const seed = numericHash % 3;
@@ -76,7 +76,7 @@ export default function AuditDetails() {
         overallRiskScore,
         riskLevel,
         status: 'FLAGGED',
-        summaryNotes: `Forensic audit inspected ${items.length} distinct line items extracted from uploaded submission ${invoiceNumber}. Detected price markup anomalies across hardware and supply categories.`,
+        summaryNotes: `We checked ${items.length} line items from invoice ${invoiceNumber} and found several prices above typical market rates in the hardware and supplies categories.`,
         createdAt: new Date().toISOString(),
         items,
       });
@@ -106,7 +106,7 @@ export default function AuditDetails() {
     return (
       <div className="flex-1 flex items-center justify-center space-y-3 text-on-surface-variant">
         <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-        <p className="font-data-mono text-data-mono text-sm ml-2">Retrieving forensic audit report...</p>
+        <p className="font-data-mono text-data-mono text-sm ml-2">Loading your invoice report...</p>
       </div>
     );
   }
@@ -154,7 +154,7 @@ export default function AuditDetails() {
           <div className="flex flex-col min-w-0">
             <h1 className="font-headline-md text-headline-md text-on-surface truncate">Invoice Analysis: {invoice.invoiceNumber}</h1>
             <span className="font-body-xs text-body-xs text-on-surface-variant">
-              Processed by Neural Intake • {invoice.vendorName}
+              Scanned by ProcureGuard AI • {invoice.vendorName}
             </span>
           </div>
         </div>

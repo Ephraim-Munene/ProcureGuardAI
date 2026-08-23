@@ -50,7 +50,7 @@ export default function RiskMatrix() {
           <Gavel className="text-[20px] text-primary" />
           <h1 className="font-headline-md text-headline-md text-on-surface">Risk Matrix</h1>
           <span className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider">
-            PPRA benchmark index · {benchmarks.length} reference items
+            Market price reference · {benchmarks.length} items
           </span>
         </div>
         <button

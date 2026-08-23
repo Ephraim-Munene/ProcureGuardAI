@@ -8,7 +8,7 @@ export default function LineItemTable({ items }) {
   return (
     <div className="border border-outline-variant bg-surface-container rounded-DEFAULT overflow-hidden">
       <div className="bg-surface-container-high px-4 py-2 border-b border-outline-variant flex justify-between items-center">
-        <span className="font-data-label text-data-label text-on-surface uppercase font-bold">Line Item Forensic Detail</span>
+        <span className="font-data-label text-data-label text-on-surface uppercase font-bold">Item-by-Item Price Check</span>
         <span className="font-data-label text-data-label text-on-surface-variant">{list.length} Records</span>
       </div>
       <div className="overflow-x-auto">

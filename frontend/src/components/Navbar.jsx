@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 const NAV_LINKS = [
   { to: '/', label: 'Dashboard', end: true },
-  { to: '/upload', label: 'Neural Scan', end: false },
+  { to: '/upload', label: 'Scan Invoice', end: false },
 ];
 
 export default function Navbar({ onMenuClick }) {
@@ -15,14 +15,14 @@ export default function Navbar({ onMenuClick }) {
   const [notifications, setNotifications] = useState([]);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [baseline, setBaseline] = useState('PPRA Baseline 2026');
+  const [baseline, setBaseline] = useState('Standard Price List 2026');
   const bellRef = useRef(null);
   const profileRef = useRef(null);
 
   const planLabels = {
     FREE: 'Basic',
-    PRO: 'Professional Forensic',
-    ENTERPRISE: 'Enterprise Oversight',
+    PRO: 'Professional',
+    ENTERPRISE: 'Enterprise',
   };
   const planIcons = {
     FREE: 'sell',

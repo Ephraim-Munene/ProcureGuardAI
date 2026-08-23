@@ -74,22 +74,22 @@ export default function Dashboard() {
       {/* KPI Strip */}
       <section className="grid grid-cols-1 md:grid-cols-4 gap-unit">
         <MetricCard
-          label="Total Public Funds Audited"
+          label="Total Amount Checked"
           value={formatKesCompact(totalAudited)}
         />
         <MetricCard
-          label="Identified Price Gouging Loss"
+          label="Possible Overcharging Found"
           value={formatKesCompact(estimatedLoss)}
           tone="error"
         />
         <MetricCard
-          label="Critical Fraud Rate"
+          label="Flagged Invoices"
           value={`${fraudRate.toFixed(1)}%`}
           progress={fraudRate}
           icon={<AlertTriangle className="text-[14px]" />}
         />
         <MetricCard
-          label="Pending Multi-Dept Audits"
+          label="Needs Your Review"
           value={String(pendingAudits).padStart(2, '0')}
         />
       </section>
@@ -102,7 +102,7 @@ export default function Dashboard() {
         <div className="flex-[0.35] flex flex-col gap-gutter min-w-0">
           <div className="bg-surface-container-low border border-outline-variant flex-1 flex flex-col p-4 relative min-h-[200px]">
             <h3 className="font-headline-md text-headline-md text-on-surface mb-4 flex items-center justify-between">
-              <span>Billed vs PPRA Benchmark</span>
+              <span>Billed vs Market Price</span>
               <MoreHorizontal className="text-[16px] text-on-surface-variant cursor-pointer hover:text-on-surface" />
             </h3>
             {chartData.length === 0 ? (

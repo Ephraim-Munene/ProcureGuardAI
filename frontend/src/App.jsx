@@ -11,6 +11,7 @@ import RiskMatrix from './pages/RiskMatrix';
 import LegalArchive from './pages/LegalArchive';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import Unauthorized from './pages/Unauthorized';
 import Pricing from './pages/Pricing';
 import Landing from './pages/Landing';
 import { useAuth } from './contexts/AuthContext';
@@ -58,6 +59,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomeRoute />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route element={<RequireAuth />}>
             <Route
               path="/*"

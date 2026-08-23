@@ -27,7 +27,7 @@ const MpesaPaymentModal = ({ isOpen, onClose, plan, amount, onSuccess }) => {
       // Start polling
       pollStatus(data.checkoutRequestId);
     } catch (err) {
-      console.error('STK Push failed:', err);
+      console.error('M-Pesa payment failed:', err);
       setErrorMsg(
         err.response?.data?.message ||
           err.response?.data?.error ||
@@ -193,7 +193,7 @@ const MpesaPaymentModal = ({ isOpen, onClose, plan, amount, onSuccess }) => {
                 Payment Successful!
               </h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant mb-6">
-                Your <span className="text-primary">{plan}</span> tier is now activated.
+                Your <span className="text-primary">{plan}</span> plan is now active.
                 Welcome to enhanced ProcureGuard AI capabilities.
               </p>
               <button

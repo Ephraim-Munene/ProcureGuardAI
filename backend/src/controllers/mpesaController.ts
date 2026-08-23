@@ -130,6 +130,10 @@ export const checkPaymentStatus = async (req: AuthenticatedRequest, res: Respons
       return res.status(404).json({ error: "Transaction not found" });
     }
 
+    if (transaction.userId !== req.user?.id) {
+      return res.status(404).json({ error: "Transaction not found" });
+    }
+
     return res.json({
       checkoutRequestId: transaction.checkoutRequestId,
       status: transaction.status,
@@ -156,6 +160,10 @@ export const simulateSuccessfulPayment = async (req: AuthenticatedRequest, res: 
     });
 
     if (!transaction) {
+      return res.status(404).json({ error: "Transaction not found" });
+    }
+
+    if (transaction.userId !== req.user?.id) {
       return res.status(404).json({ error: "Transaction not found" });
     }
 

@@ -37,7 +37,7 @@ export default function Settings() {
     riskHighThreshold: '50',
     riskFlagThreshold: '30',
     departments: '[]',
-    baseline: 'PPRA Baseline 2026',
+    baseline: 'Standard Price List 2026',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -225,7 +225,7 @@ export default function Settings() {
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <span className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider">
-                  PPRA Market Benchmark Index
+                  Market Price Reference List
                 </span>
                 <button
                   onClick={saveBenchmarks}
@@ -457,8 +457,8 @@ export default function Settings() {
               <div className="bg-surface-container-low border border-outline-variant p-4 flex items-center gap-3">
                 <ShieldCheck className="text-[24px] text-primary" />
                 <div>
-                  <div className="font-body-sm text-body-sm font-medium text-on-surface">Oversight Terminal</div>
-                  <div className="font-data-label text-data-label text-on-surface-variant mt-0.5">V.2.4.0-Forensic · React + Express + Prisma (SQLite)</div>
+                  <div className="font-body-sm text-body-sm font-medium text-on-surface">ProcureGuard AI</div>
+                  <div className="font-data-label text-data-label text-on-surface-variant mt-0.5">Invoice auditing for public procurement teams</div>
                 </div>
               </div>
               <div className="bg-surface-container-low border border-outline-variant p-4">
@@ -473,7 +473,7 @@ export default function Settings() {
               <div className="bg-surface-container-low border border-outline-variant p-4">
                 <span className="font-data-label text-data-label text-on-surface-variant uppercase block mb-2">AI / API Configuration</span>
                 <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-                  Forensic analysis is powered by Gemini 3.5 Flash (server-side). The API key and model selection are
+                  AI analysis runs securely on our servers. The API key and settings are
                   managed through the <span className="font-data-mono text-data-mono text-on-surface">backend/.env</span> file and
                   cannot be changed at runtime.
                 </p>

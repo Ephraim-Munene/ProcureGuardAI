@@ -21,14 +21,31 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// On 401 (invalid/expired session), clear the stale token and send the user
+// to the friendly session-expired page instead of showing broken data.
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('procureguard_token');
+      const path = window.location.pathname;
+      if (!['/login', '/unauthorized'].includes(path)) {
+        window.location.href = '/unauthorized';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const auditInvoice = async (file) => {
   const formData = new FormData();
   formData.append('invoice', file);
 
+  const token = localStorage.getItem('procureguard_token');
   const response = await axios.post(`${API_BASE_URL}/audit`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('procureguard_token') || ''}`,
+      Authorization: `Bearer ${token || ''}`,
     },
   });
 

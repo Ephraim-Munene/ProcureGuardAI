@@ -15,7 +15,10 @@ export interface AuthenticatedRequest extends Request {
   };
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || "procureguard_super_secret_jwt_key_2026";
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is required");
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const PLAN_LIMITS: Record<string, number> = {
   FREE: 3,
@@ -31,13 +34,10 @@ export const authenticateUser = async (
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      // Fallback to demo default user if present in DB or bypass for dev
-      const defaultUser = await prisma.user.findFirst();
-      if (defaultUser) {
-        req.user = defaultUser;
-        return next();
-      }
-      return res.status(401).json({ error: "Authentication token required" });
+      return res.status(401).json({
+        error: "UNAUTHORIZED",
+        message: "Please sign in to continue.",
+      });
     }
 
     const token = authHeader.split(" ")[1];
@@ -48,13 +48,19 @@ export const authenticateUser = async (
     });
 
     if (!user) {
-      return res.status(401).json({ error: "User not found or token invalid" });
+      return res.status(401).json({
+        error: "UNAUTHORIZED",
+        message: "Your session is no longer valid. Please sign in again.",
+      });
     }
 
     req.user = user;
     next();
   } catch (error) {
-    return res.status(401).json({ error: "Invalid or expired authorization token" });
+    return res.status(401).json({
+      error: "UNAUTHORIZED",
+      message: "Your session has expired. Please sign in again.",
+    });
   }
 };
 
@@ -89,8 +95,8 @@ export const enforceDailyScanQuota = async (
 
     if (currentScanCount >= maxScans) {
       return res.status(403).json({
-        error: `Daily scan quota reached for Tier ${user.subscriptionPlan}`,
-        message: `Your current tier (${user.subscriptionPlan}) allows ${maxScans} scans per day. Upgrade your plan to scan more invoices today!`,
+        error: "QUOTA_REACHED",
+        message: `You've used all ${maxScans} scans included in your plan for today. Upgrade your plan to keep scanning.`,
         plan: user.subscriptionPlan,
         limit: maxScans,
         used: currentScanCount,

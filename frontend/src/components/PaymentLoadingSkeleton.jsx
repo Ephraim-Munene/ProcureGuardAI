@@ -19,7 +19,7 @@ export default function PaymentLoadingSkeleton({ isVisible, plan, phoneNumber })
         </h3>
 
         <p className="font-body-sm text-body-sm text-on-surface-variant mb-2">
-          Initiating M-Pesa STK Push for your <span className="text-primary font-data-mono">{plan}</span> plan subscription.
+          Sending a payment request to your phone for the <span className="text-primary font-data-mono">{plan}</span> plan.
         </p>
 
         <div className="font-data-mono text-data-mono text-on-surface mb-4 bg-background px-4 py-2 border border-outline-variant rounded-DEFAULT">
@@ -31,7 +31,7 @@ export default function PaymentLoadingSkeleton({ isVisible, plan, phoneNumber })
         </div>
 
         <p className="font-body-xs text-body-xs text-on-surface-variant">
-          Check your phone for the STK Push prompt and enter your PIN to complete payment.
+          Check your phone for the M-Pesa prompt and enter your PIN to complete payment.
         </p>
       </div>
     </div>

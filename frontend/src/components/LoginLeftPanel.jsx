@@ -26,12 +26,12 @@ const LoginLeftPanel = () => (
       </div>
       <div className="max-w-md">
         <h1 className="font-display-lg text-display-lg text-primary mb-4 tracking-tight">
-          Oversight Terminal
+          Smart Invoice Auditing
         </h1>
         <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-8">
-          Access to this system is restricted to authorized investigative agents.
-          All forensic activities, neural scans, and registry queries are logged
-          and heavily encrypted to maintain absolute operational integrity.
+          Upload an invoice and instantly spot overpricing, inflated quantities,
+          and suspicious items. Every account keeps its own private dashboard —
+          your invoices are only visible to you.
         </p>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 border border-outline-variant bg-surface-container-low px-3 py-2 w-fit">
@@ -39,7 +39,7 @@ const LoginLeftPanel = () => (
               verified_user
             </span>
             <span className="font-data-mono text-data-mono text-on-surface uppercase">
-              EACC Baseline 2026 Compliant
+              Built for Public Procurement Teams
             </span>
           </div>
           <div className="flex items-center gap-2 border border-outline-variant bg-surface-container-low px-3 py-2 w-fit">
@@ -47,7 +47,7 @@ const LoginLeftPanel = () => (
               enhanced_encryption
             </span>
             <span className="font-data-mono text-data-mono text-on-surface uppercase">
-              Military-Grade Encryption Active
+              Your Data Stays Private
             </span>
           </div>
         </div>

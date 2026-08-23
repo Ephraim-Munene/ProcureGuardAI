@@ -18,12 +18,12 @@ import { apiClient } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
 
 const SIDE_ITEMS = [
-  { to: '/audits', icon: Terminal, label: 'Audit Terminal', end: false },
-  { to: '/vendors', icon: Landmark, label: 'Entity Forensic', end: false },
-  { to: '/risk', icon: Gavel, label: 'Risk Matrix', end: false },
+  { to: '/audits', icon: Terminal, label: 'My Invoices', end: false },
+  { to: '/vendors', icon: Landmark, label: 'Vendors', end: false },
+  { to: '/risk', icon: Gavel, label: 'Price Checks', end: false },
   { to: '/archive', icon: FolderLock, label: 'Legal Archive', end: false },
-  { to: '/upload', icon: ScanLine, label: 'Neural Intake', end: false },
-  { to: '/pricing', icon: CreditCard, label: 'License Config', end: false },
+  { to: '/upload', icon: ScanLine, label: 'Upload Invoice', end: false },
+  { to: '/pricing', icon: CreditCard, label: 'Plans & Billing', end: false },
 ];
 
 export default function Sidebar({ mobileOpen = false, onCloseMobile = () => {} }) {
@@ -139,8 +139,8 @@ export default function Sidebar({ mobileOpen = false, onCloseMobile = () => {} }
             <ShieldAlert className="text-on-surface-variant text-[18px]" />
           </div>
           <div>
-            <div className="font-body-sm text-body-sm font-medium text-on-surface">Oversight Terminal</div>
-            <div className="font-data-label text-data-label text-on-surface-variant mt-1">V.2.4.0-Forensic</div>
+            <div className="font-body-sm text-body-sm font-medium text-on-surface">ProcureGuard AI</div>
+            <div className="font-data-label text-data-label text-on-surface-variant mt-1">Invoice Auditing</div>
           </div>
         </div>
 
@@ -218,7 +218,7 @@ export default function Sidebar({ mobileOpen = false, onCloseMobile = () => {} }
                 </div>
               )}
               <div className="mt-4 pt-4 border-t border-outline-variant font-data-label text-data-label text-on-surface-variant">
-                Oversight Terminal V.2.4.0-Forensic · SQLite ledger
+                ProcureGuard AI · Invoice auditing
               </div>
             </div>
             <div className="px-5 py-3 border-t border-outline-variant flex justify-end">

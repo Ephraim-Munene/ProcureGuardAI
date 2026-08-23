@@ -54,7 +54,7 @@ export default function Vendors() {
     <div className="flex-1 flex flex-col p-gutter gap-gutter overflow-hidden min-h-[500px]">
       <div className="flex items-center gap-3">
         <Landmark className="text-[20px] text-primary" />
-        <h1 className="font-headline-md text-headline-md text-on-surface">Entity Forensic</h1>
+        <h1 className="font-headline-md text-headline-md text-on-surface">Vendors</h1>
         <span className="font-data-label text-data-label text-on-surface-variant uppercase tracking-wider">
           {vendorList.length} vendors under review
         </span>
