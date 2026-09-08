@@ -43,7 +43,7 @@ function HomeRoute() {
       </div>
       <footer className="border-t border-outline-variant bg-background py-4 text-center shrink-0 md:pl-sidebar-width">
         <p className="font-data-label text-data-label text-on-surface-variant">
-          © 2026 ProcureGuard AI • Public Procurement Oversight
+          © 2026 ProcureGuard AI • Corporate Procurement Management
         </p>
       </footer>
     </>

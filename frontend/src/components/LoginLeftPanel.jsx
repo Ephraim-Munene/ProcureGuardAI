@@ -39,7 +39,7 @@ const LoginLeftPanel = () => (
               verified_user
             </span>
             <span className="font-data-mono text-data-mono text-on-surface uppercase">
-              Built for Public Procurement Teams
+              Built for Corporate & SME Teams
             </span>
           </div>
           <div className="flex items-center gap-2 border border-outline-variant bg-surface-container-low px-3 py-2 w-fit">

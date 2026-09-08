@@ -153,9 +153,37 @@ export default function AuditDetails() {
           )}
           <div className="flex flex-col min-w-0">
             <h1 className="font-headline-md text-headline-md text-on-surface truncate">Invoice Analysis: {invoice.invoiceNumber}</h1>
-            <span className="font-body-xs text-body-xs text-on-surface-variant">
-              Scanned by ProcureGuard AI • {invoice.vendorName}
-            </span>
+<div className="flex items-center gap-2">
+              <span className="font-body-xs text-body-xs text-on-surface-variant font-data-mono text-data-mono">
+                Scanned by ProcureGuard AI
+              </span>
+              {(() => {
+                const provider = invoice.summaryNotes?.includes("Audited via")
+                  ? (invoice.summaryNotes.match(/Audited via (\w+)/) || [])[1]?.toUpperCase()
+                  : "PROCURGUARD";
+                if (provider === "GEMINI") return (
+                  <span className="px-2 py-1 text-xxs text-primary rounded-full bg-primary/10 border border-primary/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+                    Gemini
+                  </span>
+                );
+                if (provider === "OPENAI" || provider === "OPENAI".toUpperCase()) return (
+                  <span className="px-2 py-1 text-xxs text-success rounded-full bg-success/10 border border-success/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+                    OpenAI
+                  </span>
+                );
+                if (provider === "HEURISTIC") return (
+                  <span className="px-2 py-1 text-xxs text-muted rounded-full bg-muted/10 border border-muted/20">Heuristic</span>
+                );
+                return (
+                  <span className="px-2 py-1 text-xxs text-on-surface-variant rounded-full bg-surface-container-high/50 border border-surface-container-high/20">ProcureGuard</span>
+                );
+              })()}
+              <span className="font-body-xs text-body-xs text-on-surface-variant ml-1">
+                • {invoice.vendorName}
+              </span>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-3 flex-wrap">

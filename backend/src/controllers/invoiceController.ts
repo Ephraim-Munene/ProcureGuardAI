@@ -16,6 +16,11 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     // 1. Analyze document using Gemini or dynamic forensic parser
     const auditResult = await auditInvoiceWithGemini(buffer, mimetype, originalname);
 
+    // Extract provider info for audit trail & UI display
+    const providerTag = auditResult.providerUsed
+      ? `[Audited via ${auditResult.providerUsed.toUpperCase()} AI Engine] `
+      : "";
+
     const authenticatedUser = (req as any).user;
     if (!authenticatedUser?.id) {
       return res.status(401).json({
@@ -38,7 +43,7 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
         totalAmountKes: Number(auditResult.totalAmountKes) || 0,
         overallRiskScore: Number(auditResult.overallRiskScore) || 0,
         riskLevel: auditResult.riskLevel || "MEDIUM",
-        summaryNotes: auditResult.summaryNotes || "No summary notes provided.",
+        summaryNotes: `${providerTag}${auditResult.summaryNotes || "No summary notes provided."}`,
         status: auditResult.overallRiskScore > 30 ? "FLAGGED" : "CLEAN",
         items: {
           create: (auditResult.items || []).map((item: any) => ({

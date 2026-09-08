@@ -199,13 +199,13 @@ export default function Landing() {
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container border border-outline-variant rounded-full text-primary font-data-mono text-data-mono text-xs uppercase tracking-wider">
             <ShieldCheck className="text-[14px]" />
-            Smart Invoice Auditing for Public Procurement
+            Smart Invoice Auditing for Corporates & SMEs
           </div>
           <h1 className="font-display-lg text-3xl sm:text-5xl lg:text-6xl text-on-surface font-extrabold tracking-tight leading-tight">
-            Stop Overpricing Before It Costs You
+            Protect Your Bottom Line from Overbilling
           </h1>
           <p className="font-body-sm text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
-            Upload an invoice and instantly see which items are overpriced, which quantities look inflated, and how much you could be overpaying. Every account keeps its data private and separate.
+            Upload an invoice and instantly see which items are overpriced, which quantities look inflated, and how much you could be saving. Every account keeps its data private and separate. Multi-AI engine ensures uptime even during API outages.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
             <Link
@@ -265,7 +265,7 @@ export default function Landing() {
             Everything You Need to Audit Invoices
           </h2>
           <p className="font-body-sm text-on-surface-variant mt-3">
-            Simple tools that do the hard work of invoice checking for you — no training needed.
+            Simple tools that do the hard work of invoice checking for your business — no training needed. Our multi-AI router ensures your audits never stop, even if one provider has an outage.
           </p>
         </div>
 
@@ -693,8 +693,8 @@ export default function Landing() {
           </div>
 
           <div className="font-data-label text-data-label text-on-surface-variant text-center md:text-right">
-            © 2026 ProcureGuard AI • Public Procurement Oversight
-            <div className="text-[10px] text-outline mt-1">Simple, private, invoice auditing</div>
+            © 2026 ProcureGuard AI • Corporate Procurement Management
+            <div className="text-[10px] text-outline mt-1">Smart multi-AI invoice auditing for businesses</div>
           </div>
         </div>
       </footer>
