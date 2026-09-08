@@ -16,6 +16,13 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     // 1. Analyze document using Gemini or dynamic forensic parser
     const auditResult = await auditInvoiceWithGemini(buffer, mimetype, originalname);
 
+    // Reject non-invoice uploads (e.g., photos of animals, scenery, random objects)
+    if (auditResult.isInvoice === false) {
+      return res.status(400).json({
+        error: auditResult.summaryNotes || "The uploaded file does not appear to be a valid invoice, receipt, or procurement document. Please upload a clear invoice document.",
+      });
+    }
+
     // Extract provider info for audit trail & UI display
     const providerTag = auditResult.providerUsed
       ? `[Audited via ${auditResult.providerUsed.toUpperCase()} AI Engine] `
