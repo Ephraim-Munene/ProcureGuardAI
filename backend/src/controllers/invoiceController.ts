@@ -83,7 +83,9 @@ export const uploadAndAuditInvoice = async (req: Request, res: Response) => {
     return res.status(201).json({ success: true, invoice });
   } catch (error) {
     console.error("Audit Processing Error:", error);
-    return res.status(500).json({ error: "Failed to audit invoice document." });
+    return res.status(500).json({
+      error: error instanceof Error ? error.message : "Failed to audit invoice document.",
+    });
   }
 };
 
