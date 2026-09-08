@@ -48,7 +48,7 @@ export async function auditInvoiceWithGemini(
     try {
       console.log("[ProcureGuard AI Engine] Initiating primary audit via Gemini Vision API...");
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const model = "gemini-2.0-flash";
+      const model = "gemini-3.6-flash";
 
       const response = await ai.models.generateContent({
         model,
