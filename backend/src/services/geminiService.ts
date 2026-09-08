@@ -82,13 +82,12 @@ export async function auditInvoiceWithGemini(
         };
       }
     } catch (geminiError) {
-      console.error("[ProcureGuard AI Engine] Gemini API error, attempting failover to secondary provider:", geminiError);
+      console.error("[ProcureGuard AI Engine] Gemini API error:", geminiError);
+      throw new Error(`Gemini API audit failed: ${geminiError instanceof Error ? geminiError.message : String(geminiError)}`);
     }
-  } else {
-    console.warn("[ProcureGuard AI Engine] GEMINI_API_KEY not configured or dummy.");
   }
 
-  // 2. Try Secondary Fallback: OpenAI GPT-4o-mini Vision API
+  // 2. Try Secondary Fallback: OpenAI GPT-4o-mini Vision API (if configured)
   if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== "DUMMY_KEY") {
     try {
       console.log("[ProcureGuard AI Engine] Triggering secondary fallback via OpenAI GPT-4o-mini...");
@@ -111,7 +110,7 @@ export async function auditInvoiceWithGemini(
               content: [
                 {
                   type: "text",
-                  text: `${getAuditPromptText(benchmarkIndex)}\n\nIMPORTANT: Respond with a JSON object containing keys: invoiceNumber, vendorName, totalAmountKes, overallRiskScore, riskLevel, summaryNotes, and items (array of item objects).`,
+                  text: `${getAuditPromptText(benchmarkIndex)}\n\nIMPORTANT: Respond with a JSON object containing keys: isInvoice, invoiceNumber, vendorName, totalAmountKes, overallRiskScore, riskLevel, summaryNotes, and items (array of item objects).`,
                 },
                 {
                   type: "image_url",
@@ -144,12 +143,7 @@ export async function auditInvoiceWithGemini(
     }
   }
 
-  // 3. Tertiary Fallback: Dynamic Forensic Heuristic Engine
-  console.warn("[ProcureGuard AI Engine] Falling back to tertiary Forensic Heuristic Engine.");
-  return {
-    ...generateDynamicAuditAnalysis(fileBuffer, originalname),
-    providerUsed: "HEURISTIC" as const,
-  };
+  throw new Error("Gemini API key (GEMINI_API_KEY) is missing, dummy, or invalid. Please provide a valid Gemini API key (starting with AIzaSy...) in backend/.env");
 }
 
 function getAuditPromptText(benchmarkIndex: string): string {
@@ -306,166 +300,5 @@ export function clampAuditResult(result: any) {
     _integrityNote: flaggedShare > 0.3 && riskScore < 30
       ? "Risk score suppressed relative to flagged item ratio — review manually."
       : undefined,
-  };
-}
-
-function generateDynamicAuditAnalysis(fileBuffer: Buffer, originalname: string) {
-  const hash = fileBuffer.reduce((acc, byte) => acc + byte, 0);
-  const randomSeed = hash % 3;
-
-  const vendors = [
-    "Apex Global Procurement Ltd",
-    "Savannah Horizon Supplies & Tech",
-    "Rift Valley Enterprises & Logistics"
-  ];
-
-  const vendorName = vendors[randomSeed];
-  const invoiceNumber = `INV-KE-2026-${(1000 + (hash % 8999))}`;
-
-  let items = [
-    {
-      description: "Bic Ballpoint Pens (Box of 50)",
-      quantity: 20,
-      invoicedUnitPriceKes: 2500,
-      marketUnitPriceKes: 1250,
-      inflationPercentage: 100.0,
-      isFlagged: true,
-      flagReason: "Unit price exceeds market benchmark by 100%. Severe inflation flagged.",
-      riskLevel: "CRITICAL"
-    },
-    {
-      description: "A4 Printing Paper Reams (500 sheets)",
-      quantity: 40,
-      invoicedUnitPriceKes: 1800,
-      marketUnitPriceKes: 850,
-      inflationPercentage: 111.7,
-      isFlagged: true,
-      flagReason: "Invoiced at double the standard benchmark price of KES 850.",
-      riskLevel: "HIGH"
-    },
-    {
-      description: "Standard Ergonomic Mesh Office Chair",
-      quantity: 12,
-      invoicedUnitPriceKes: 48000,
-      marketUnitPriceKes: 18000,
-      inflationPercentage: 166.7,
-      isFlagged: true,
-      flagReason: "Billed at executive luxury price point exceeding max allowed benchmark KES 25,000.",
-      riskLevel: "CRITICAL"
-    },
-    {
-      description: "Commercial Bottled Drinking Water 500ml (Carton)",
-      quantity: 50,
-      invoicedUnitPriceKes: 500,
-      marketUnitPriceKes: 500,
-      inflationPercentage: 0.0,
-      isFlagged: false,
-      flagReason: null,
-      riskLevel: "LOW"
-    }
-  ];
-
-  if (randomSeed === 1) {
-    items = [
-      {
-        description: "HP Core i5 16GB RAM Laptop",
-        quantity: 5,
-        invoicedUnitPriceKes: 95000,
-        marketUnitPriceKes: 82000,
-        inflationPercentage: 15.8,
-        isFlagged: false,
-        flagReason: "Within acceptable market variance threshold.",
-        riskLevel: "LOW"
-      },
-      {
-        description: "24-inch LED Desktop Monitors",
-        quantity: 10,
-        invoicedUnitPriceKes: 34000,
-        marketUnitPriceKes: 24000,
-        inflationPercentage: 41.7,
-        isFlagged: true,
-        flagReason: "Unit price exceeds market benchmark by 41.7% markup.",
-        riskLevel: "MEDIUM"
-      },
-      {
-        description: "Wireless USB Keyboard & Mouse Combo",
-        quantity: 10,
-        invoicedUnitPriceKes: 4500,
-        marketUnitPriceKes: 2500,
-        inflationPercentage: 80.0,
-        isFlagged: true,
-        flagReason: "Markup exceeds 30% ceiling.",
-        riskLevel: "HIGH"
-      },
-      {
-        description: "Cat6 Network Patch Cables (3m)",
-        quantity: 25,
-        invoicedUnitPriceKes: 850,
-        marketUnitPriceKes: 600,
-        inflationPercentage: 41.6,
-        isFlagged: true,
-        flagReason: "Price inflated above local wholesale rates.",
-        riskLevel: "MEDIUM"
-      }
-    ];
-  } else if (randomSeed === 2) {
-    items = [
-      {
-        description: "Executive Mahogany Office Desk",
-        quantity: 3,
-        invoicedUnitPriceKes: 55000,
-        marketUnitPriceKes: 45000,
-        inflationPercentage: 22.2,
-        isFlagged: false,
-        flagReason: "Within acceptable furniture tolerance.",
-        riskLevel: "LOW"
-      },
-      {
-        description: "Hand Sanitizer 500ml Dispenser Refill",
-        quantity: 30,
-        invoicedUnitPriceKes: 350,
-        marketUnitPriceKes: 350,
-        inflationPercentage: 0.0,
-        isFlagged: false,
-        flagReason: null,
-        riskLevel: "LOW"
-      },
-      {
-        description: "Heavy Duty Staples (Box)",
-        quantity: 15,
-        invoicedUnitPriceKes: 450,
-        marketUnitPriceKes: 400,
-        inflationPercentage: 12.5,
-        isFlagged: false,
-        flagReason: null,
-        riskLevel: "LOW"
-      },
-      {
-        description: "Heavy Duty Paper Shredder Machine",
-        quantity: 2,
-        invoicedUnitPriceKes: 38000,
-        marketUnitPriceKes: 25000,
-        inflationPercentage: 52.0,
-        isFlagged: true,
-        flagReason: "Unit price exceeds market benchmark by 52%.",
-        riskLevel: "HIGH"
-      }
-    ];
-  }
-
-  const totalAmountKes = items.reduce((acc, item) => acc + item.invoicedUnitPriceKes * item.quantity, 0);
-  const overallRiskScore = randomSeed === 0 ? 88.5 : randomSeed === 1 ? 65.0 : 34.2;
-  const riskLevel = overallRiskScore > 75 ? "CRITICAL" : overallRiskScore > 50 ? "HIGH" : "MEDIUM";
-  const summaryNotes = `Forensic audit inspected ${items.length} distinct line items extracted from invoice. Detected price markup anomalies cross-examined against corporate benchmark rates.`;
-
-  return {
-    isInvoice: true,
-    invoiceNumber,
-    vendorName,
-    totalAmountKes,
-    overallRiskScore,
-    riskLevel,
-    summaryNotes,
-    items
   };
 }
